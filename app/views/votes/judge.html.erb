@@ -1,0 +1,11 @@
+<% content_for :head do %>
+	<%= javascript_include_tag "vote" %>
+	<%= soundcloud_api_js %>
+<% end %>
+
+Current song: <span class="current-song-id"></span>
+
+<div>
+	<button class="js-vote-track" data-liked="true">Like</button>
+	<button class="js-vote-track" data-liked="false">Pass</button>
+</div>

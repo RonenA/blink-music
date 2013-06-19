@@ -1,0 +1,6 @@
+development:
+  client_id: 33e780b8fadb971a1cd5793866664a05
+production:
+  client_id: 33e780b8fadb971a1cd5793866664a05
+testing:
+  client_id: 33e780b8fadb971a1cd5793866664a05
