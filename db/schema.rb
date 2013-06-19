@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130617021238) do
+ActiveRecord::Schema.define(:version => 20130619061829) do
 
   create_table "users", :force => true do |t|
     t.string   "token"
@@ -20,11 +20,11 @@ ActiveRecord::Schema.define(:version => 20130617021238) do
   end
 
   create_table "votes", :force => true do |t|
-    t.string   "user_id",             :null => false
-    t.string   "soundcloud_track_id", :null => false
+    t.string   "user_id",    :null => false
+    t.string   "track_id",   :null => false
     t.boolean  "liked"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

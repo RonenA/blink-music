@@ -1,3 +1,6 @@
+require 'restclient'
+require 'make_url'
+
 class User < ActiveRecord::Base
 
   attr_accessible :token
@@ -8,44 +11,36 @@ class User < ActiveRecord::Base
   has_many :votes
 
   def generate_token
-    new_token = SecureRandom.urlsafe_base64(32)
-    until User.find_by_token(new_token).blank?
+    begin
       new_token = SecureRandom.urlsafe_base64(32)
-    end
+    end until User.find_by_token(new_token).blank?
     self.token = new_token
   end
 
   #returns ids of newly added tracks
   def get_new_tracks
-    tracks = soundcloud_client.get('/tracks',
-                                    :filter => :streamable,
-                                    :order => :hotness)
-    tracks.each do |track|
-      @id = track[:id]
-      unless self.votes.create { |v| v.soundcloud_track_id = @id }
-        tracks.delete(track)
+    track_ids = get_music(:term => :coldplay).map { |t| t[:trackId] }
+
+    transaction do
+      track_ids.select do |id|
+        self.votes.create { |v| v.track_id = id }
       end
     end
-
-    tracks.map{ |t| t[:id] }
   end
 
   def tracks_to_vote
-    tracks_to_vote = self.votes.where(:liked => nil).pluck(:soundcloud_track_id)
+    tracks_to_vote = self.votes.where(:liked => nil).pluck(:track_id)
     if tracks_to_vote.length < 10
       tracks_to_vote += get_new_tracks
     end
     tracks_to_vote
   end
 
-  def soundcloud_client
-    if @soundcloud_client.nil?
-      config_file = Rails.root.join('config', 'soundcloud.yml')
-      config = YAML.load_file(config_file)[Rails.env].with_indifferent_access
+  def get_music(options={})
+    options.reverse_merge!(:media => :music)
 
-      @soundcloud_client = Soundcloud.new(:client_id => config[:client_id])
-    end
-    @soundcloud_client
+    url = MakeURL.make_url('https://itunes.apple.com/search', options)
+    response = RestClient.get(url)
+    JSON.parse(response).with_indifferent_access[:results]
   end
-
 end

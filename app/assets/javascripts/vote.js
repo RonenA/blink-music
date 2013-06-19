@@ -1,18 +1,13 @@
 "use strict";
 //TODO: Remove
 
-var scClientId = '33e780b8fadb971a1cd5793866664a05';
 var snippetLength = 1000;
 
 $(function(){
-	SC.initialize({
-	  client_id: scClientId
-	});
-
 	getCandidates().done(function(trackIds){
 		var sounds = getSounds(trackIds);
 
-		playNextSound(sounds, trackIds);
+		playNextSound(sounds);
 
 		$('.js-vote-track').click(function(){
 			voteHandler($(this).data('liked'), sounds, trackIds);
@@ -30,7 +25,8 @@ $(function(){
 	});
 });
 
-//Get array of soundcloud track ids
+// Get array of iTunes track ids
+//  getCandidates :: Deferred [Integer]
 var getCandidates = function(){
 	return $.ajax({
 		url: '/votes/candidates',
@@ -42,7 +38,51 @@ var getCandidates = function(){
 	});
 };
 
-//Ajax put vote
+// Get track attributes from iTunes
+//  getTrackData :: Integer -> Deferred Map
+var getTrackData = function(trackId){
+	return $.ajax({
+		url: 'http://itunes.apple.com/lookup?id='+trackId,
+		type: 'GET',
+		dataType: 'jsonp'
+	}).fail(function (jqXHR, textStatus, errorThrown) {
+		//TODO: Handle errors better
+		alert("Error: " + textStatus);
+	});
+};
+
+// Get deferred stream from iTunes
+//  getSound :: Integer -> Deferred <audio>
+var getSound = function(trackId){
+	return getTrackData(trackId).pipe(function(trackData){
+		var source = trackData.results[0].previewUrl;
+		return $('<audio>', {src: source, preload: 'auto'});
+	});
+};
+
+// Get array of deferred sounds
+//  getSounds :: [Integer] -> [Deferred <audio>]
+var getSounds = function(trackIds){
+	var sounds = [];
+
+	for(var i=0; i < trackIds.length; i++){
+		sounds[i] = getSound(trackIds[i]);
+	}
+
+	return sounds;
+};
+
+// Cast vote and play next track
+//  voteHandler :: Bool -> [Deferred <audio>] -> [Integer] -> ()
+var voteHandler = function(liked, sounds, trackIds){
+	stopSound();
+	submitVote(liked, trackIds.shift());
+	sounds.shift();
+	playNextSound(sounds);
+}
+
+// Ajax put vote
+//  submitVote :: Bool -> Integer -> ()
 var submitVote = function(liked, trackId){
 	$.ajax({
 		url: '/votes/'+trackId,
@@ -55,66 +95,25 @@ var submitVote = function(liked, trackId){
 	});
 };
 
-//Get track attributes from Soundcloud
-var getTrackData = function(trackId){
-	return $.ajax({
-		url: 'https://api.soundcloud.com/tracks/'+trackId+'.json?consumer_key='+scClientId,
-		type: 'GET',
-		dataType: 'json'
-	}).fail(function (jqXHR, textStatus, errorThrown) {
-		//TODO: Handle errors better
-		alert("Error: " + textStatus);
-	});
-};
-
-//Get deferred stream from soundcloud
-var getSound = function(trackId){
-	var result = $.Deferred();
-
-	getTrackData(trackId).done(function(data){
-		var trackData = data;
-		var options = {
-			from: trackData.duration/2,
-			to: trackData.duration/2 + snippetLength,
-			stream: true,
-			autoPlay:true
-		};
-
-		SC.stream("/tracks/"+trackId, options, function(sound){
-			sound.load(options);
-			result.resolve(sound);
-		});
-	});
-
-	return result;
-};
-
-//Get array of deferred sounds
-var getSounds = function(trackIds){
-	var sounds = [];
-
-	for(var i=0; i < trackIds.length; i++){
-		sounds[i] = getSound(trackIds[i]);
-	}
-
-	return sounds;
-};
-
-//Cast vote and play next track
-var voteHandler = function(liked, sounds, trackIds){
-	submitVote(liked, trackIds.shift());
-	sounds.shift();
-	playNextSound(sounds);
-}
-
-//play the sound at the
+// Play the sound at the beginning of the array
+//  playNextSound :: Deferred <audio> -> ()
 var playNextSound = function(sounds){
 	if (sounds.length == 0){
 		alert("No tracks");
 	}
 	else{
 		sounds[0].done(function(sound){
-			sound.play();
+			$('body').append(sound);
+			sound[0].play();
+			setTimeout(function(){sound[0].pause()}, 2000);
 		});
 	}
-}
+};
+
+// Stop the sound that is currently playing
+//  stopSound :: ()
+var stopSound = function(){
+	var sound = $('audio');
+	sound[0].pause();
+	sound.remove();
+};
