@@ -1,0 +1,48 @@
+@font-face {
+  font-family: 'blink-music';
+  src: url('blink-music.eot?33976065');
+  src: url('blink-music.eot?33976065#iefix') format('embedded-opentype'),
+       url('blink-music.woff?33976065') format('woff'),
+       url('blink-music.ttf?33976065') format('truetype'),
+       url('blink-music.svg?33976065#blink-music') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'blink-music';
+    src: url('blink-music.svg?33976065#blink-music') format('svg');
+  }
+}
+*/
+
+ [class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "blink-music";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+
+  line-height: 1em;
+  margin-left: .2em;
+}
+
+i[class^="icon-"]:before, i[class*=" icon-"]:before {
+  margin: 0;
+}
+
+
+.icon-play-circled:before { content: '\e802'; } /* '' */
+.icon-play:before { content: '\e803'; } /* '' */
+.icon-thumbs-up:before { content: '\e800'; } /* '' */
+.icon-thumbs-down:before { content: '\e801'; } /* '' */

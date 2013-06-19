@@ -1,0 +1,60 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "compass/css3";
+
+$helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$red: #F10000;
+$green: #53CF00;
+
+body{
+	background-color: black;
+	font-family: $helvetica;
+}
+
+button{
+	border: 0;
+	-webkit-appearance: none;
+}
+
+.btn{
+	cursor: pointer;
+
+	@include border-radius(5px);
+	padding: 20px 30px;
+	margin: 0;
+	display: inline-block;
+
+	font-size: 50px;
+	font-family: $helvetica;
+	font-weight: 100;
+	color: white;
+}
+
+@mixin button-color($color){
+						background-color: $color;
+	&:hover	{ background-color: lighten($color, 3%)}
+	&:active{	background-color: darken($color, 5%)}
+}
+
+.btn--dislike{
+	@include button-color($red);
+}
+
+.btn--like{
+	@include button-color($green);
+}
+
+.l-center-block{
+	display: block;
+	margin: 0 auto;
+}
+
+.l-absolute-center{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}

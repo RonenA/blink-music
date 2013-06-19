@@ -1,0 +1,31 @@
+{
+  "name": "blink-music",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "glyphs": [
+    {
+      "uid": "acf41aa4018e58d49525665469e35665",
+      "css": "thumbs-up",
+      "code": 59392,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "7533e68038fc6d520ede7a7ffa0a2f64",
+      "css": "thumbs-down",
+      "code": 59393,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "20370af73ca90f73b4bda366d92303d9",
+      "css": "play",
+      "code": 59395,
+      "src": "elusive"
+    },
+    {
+      "uid": "fc006ff27e50163bdec3a7588226171b",
+      "css": "play-circled",
+      "code": 59394,
+      "src": "elusive"
+    }
+  ]
+}

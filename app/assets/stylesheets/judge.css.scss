@@ -1,0 +1,22 @@
+$vote-pod-height: 200px;
+$vote-pod-width: 494px;
+$vote-button-height: 110px;
+
+
+.vote-pod{
+	&.l-absolute-center{
+		margin-left: -$vote-pod-width/2;
+		margin-top: -$vote-pod-height/2;
+	}
+}
+
+//The like/dislike button
+.vote-pod--outer{
+	margin: ($vote-pod-height - $vote-button-height)/2 0;
+}
+
+//The circle between them
+.vote-pod--inner{
+	vertical-align: top;
+	margin: 0 33px;
+}
