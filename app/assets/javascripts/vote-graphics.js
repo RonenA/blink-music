@@ -1,105 +1,120 @@
-$(function(){
+"use strict";
+//TODO: Remove
 
-var canvas = document.getElementById('spinner');
-var context = canvas.getContext('2d');
+var Spinner = function(){
+	var circ = 2*Math.PI;
+	var rAng = Math.PI/2;
 
-var w = canvas.width;
-var h = canvas.height;
-var border = 5;
-var radius = (w - border)/2;
-var ox = radius + border;
-var oy = radius + border;
+	var timeoutSpeed = 30;
+	var increment = circ * timeoutSpeed / snippetLength;
 
-var circ = 2*Math.PI;
-var right = Math.PI/2;
+	var backgroundColor = 'black';
+	var strokeColor = backgroundColor;
+	var fillColor = '#222';
 
-var seconds = 1000;
+	var border = 2;
 
-var timeoutSpeed = 30;
-var increment = circ * timeoutSpeed / (5 * seconds);
+	function Spinner(canvas){
+		var ctx = canvas.getContext('2d');
 
-var backgroundColor = 'black';
-var strokeColor = backgroundColor;
-var fillColor = '#222';
+		var w = canvas.width;
+		var h = canvas.height;
 
-var clearCanvas = function(){
-	context.clearRect ( 0 , 0 , w , h );
-};
+		var radius = (w - border)/2;
+		var ox = radius + border;
+		var oy = radius + border;
 
-var drawCircle = function(){
-	context.beginPath();
-	context.arc(ox, oy, radius, 0, circ, false);
-	context.fillStyle = backgroundColor;
-	context.fill();
-};
+		var i = 0;
 
-var fillCircle = function(i){
-	clearCanvas();
-	drawCircle();
+		this.clearCanvas = function(){
+			ctx.clearRect ( 0 , 0 , w , h );
+		};
 
-	context.save();
-	context.beginPath();
-	context.arc(ox, oy, radius, 0, 2 * Math.PI, false);
-	context.clip();
+		this.reset = function(){
+			i = 0;
+		};
 
-	for(j = 0; j < 4; ++j){
-    // qs = quadrant start
-    var qs_theta = j*right;
-    var qs_x = 2*radius*Math.sin(qs_theta);
-    var qs_y = 2*radius*Math.cos(qs_theta);
-    var qf_theta = (j+1)*right;
-    var qf_x = 2*radius*Math.sin(qf_theta);
-    var qf_y = 2*radius*Math.cos(qf_theta);
+		this.drawCircle = function(){
+			ctx.beginPath();
+			ctx.arc(ox, oy, radius, 0, circ, false);
+			ctx.fillStyle = backgroundColor;
+			ctx.fill();
+		};
 
-    if((j+1)*right < i){
-    	context.beginPath();
-    	context.moveTo(ox, oy);
-    	context.lineTo(ox + qs_x, oy + qs_y);
-    	context.lineTo(ox + qf_x, oy + qf_y);
-    	context.lineTo(ox, oy);
-    	context.fillStyle = fillColor;
-    	context.fill();
-    	context.lineWidth = 1;
-    	context.strokeStyle = fillColor;
-    	context.stroke();
-    } else if (j*right < i){
-    	context.beginPath();
-    	context.moveTo(ox, oy);
-    	context.lineTo(ox + qs_x, oy + qs_y);
-    	context.lineTo(ox + 2*radius*Math.sin(i), oy + 2*radius*Math.cos(i));
-    	context.lineTo(ox, oy);
-    	context.fillStyle = fillColor;
-    	context.fill();
-    	context.lineWidth = 1;
-    	context.strokeStyle = fillColor;
-    	context.stroke();
-    }
-  }
+		this.fillCircle = function(){
+			this.clearCanvas();
+			this.drawCircle();
 
-  context.restore();
-	context.beginPath();
-  context.arc(ox, oy, radius, 0, 2 * Math.PI, false);
-  context.lineWidth = border;
-  context.strokeStyle = strokeColor;
-  context.stroke();
+			ctx.save();
+			ctx.beginPath();
+			ctx.arc(ox, oy, radius, 0, 2 * Math.PI, false);
+			ctx.clip();
 
-  if (i < Math.PI*2){
-  	window.setTimeout(function(){
-  		fillCircle(i+increment)
-  	}, timeoutSpeed);
-  }
-}
+			for(var j = 0; j < 4; ++j){
+		    // qs = quadrant start
+		    var qs_theta = j*rAng;
+		    var qs_x = 2*radius*Math.sin(qs_theta);
+		    var qs_y = 2*radius*Math.cos(qs_theta);
+		    var qf_theta = (j+1)*rAng;
+		    var qf_x = 2*radius*Math.sin(qf_theta);
+		    var qf_y = 2*radius*Math.cos(qf_theta);
 
-fillCircle(0);
+		    if((j+1)*rAng < i){
+		    	ctx.beginPath();
+		    	ctx.moveTo(ox, oy);
+		    	ctx.lineTo(ox + qs_x, oy + qs_y);
+		    	ctx.lineTo(ox + qf_x, oy + qf_y);
+		    	ctx.lineTo(ox, oy);
+		    	ctx.fillStyle = fillColor;
+		    	ctx.fill();
+		    	ctx.lineWidth = 1;
+		    	ctx.strokeStyle = fillColor;
+		    	ctx.stroke();
+		    } else if (j*rAng < i){
+		    	ctx.beginPath();
+		    	ctx.moveTo(ox, oy);
+		    	ctx.lineTo(ox + qs_x, oy + qs_y);
+		    	ctx.lineTo(ox + 2*radius*Math.sin(i), oy + 2*radius*Math.cos(i));
+		    	ctx.lineTo(ox, oy);
+		    	ctx.fillStyle = fillColor;
+		    	ctx.fill();
+		    	ctx.lineWidth = 1;
+		    	ctx.strokeStyle = fillColor;
+		    	ctx.stroke();
+		    }
+		  }
 
-});
+		  ctx.restore();
+			ctx.beginPath();
+		  ctx.arc(ox, oy, radius, 0, 2 * Math.PI, false);
+		  ctx.lineWidth = border;
+		  ctx.strokeStyle = strokeColor;
+		  ctx.stroke();
+
+		  var that = this;
+		  // if (i < Math.PI*2){
+		  	window.setTimeout(function(){
+		  		i += increment;
+		  		that.fillCircle();
+		  	}, timeoutSpeed);
+		  // }
+		}
+
+		this.spin = function(){
+			i = 0;
+			this.fillCircle(0);
+		};
+	};
+
+	return Spinner;
+}();
 
 $.fn.cssAnimate = function(animation, duration){
   duration == duration || 1000;
-  el = $(this);
+  var el = $(this);
 
   el.addClass("animated").addClass(animation);
   setTimeout(function(){
     el.removeClass("animated").removeClass(animation);
-  }, 1000);
+  }, duration);
 };

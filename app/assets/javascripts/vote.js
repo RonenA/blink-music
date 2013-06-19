@@ -1,13 +1,16 @@
 "use strict";
 //TODO: Remove
 
-var snippetLength = 1000;
+var snippetLength = 2000;
+var voteSpinner;
 
 $(function(){
 	getCandidates().done(function(trackIds){
 		var sounds = getSounds(trackIds);
 
 		playNextSound(sounds);
+		voteSpinner = new Spinner( document.getElementById('spinner') );
+		voteSpinner.spin();
 
 		$('.js-vote-track').click(function(){
 			voteHandler($(this).data('liked'), sounds, trackIds);
@@ -16,9 +19,11 @@ $(function(){
 		$(document).keypress(function(e){
 			if (e.which == 97){
 				voteHandler(true, sounds, trackIds);
+				$('.btn--like').cssAnimate('pulse', 500);
 			}
 			else if(e.which == 108){
 				voteHandler(false, sounds, trackIds);
+				$('.btn--dislike').cssAnimate('pulse', 500);
 			}
 		});
 
@@ -105,7 +110,10 @@ var playNextSound = function(sounds){
 		sounds[0].done(function(sound){
 			$('body').append(sound);
 			sound[0].play();
-			setTimeout(function(){sound[0].pause()}, 2000);
+			startSpinner();
+			setTimeout(function(){
+				sound[0].pause();
+			}, snippetLength);
 		});
 	}
 };
@@ -117,3 +125,9 @@ var stopSound = function(){
 	sound[0].pause();
 	sound.remove();
 };
+
+var startSpinner = function(){
+	console.log('pop');
+	//$('.vote-pod__inner__icon').cssAnimate('pulse', 500);  pop the play icon
+	voteSpinner.reset();
+}

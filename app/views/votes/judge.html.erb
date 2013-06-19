@@ -5,11 +5,14 @@
 
 
 <div class="vote-pod l-absolute-center">
-	<button class="js-vote-track btn btn--like vote-pod--outer" data-liked="true">
-		<i class="icon-thumbs-up animated"></i>
+	<button class="js-vote-track btn btn--like vote-pod__outer" data-liked="true">
+		<i class="icon-thumbs-up"></i>
 	</button>
-	<canvas width="200" height="200" id="spinner" class="vote-pod--inner"></canvas>
-	<button class="js-vote-track btn btn--dislike vote-pod--outer" data-liked="false">
-		<i class="icon-thumbs-down animated"></i>
+	<div class="vote-pod__inner">
+		<i class="icon-play vote-pod__inner__icon"></i>
+		<canvas width="200" height="200" id="spinner" class=""></canvas>
+	</div>
+	<button class="js-vote-track btn btn--dislike vote-pod__outer" data-liked="false">
+		<i class="icon-thumbs-down"></i>
 	</button>
 </div>

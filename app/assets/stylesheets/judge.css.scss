@@ -11,12 +11,22 @@ $vote-button-height: 110px;
 }
 
 //The like/dislike button
-.vote-pod--outer{
+.vote-pod__outer{
 	margin: ($vote-pod-height - $vote-button-height)/2 0;
 }
 
 //The circle between them
-.vote-pod--inner{
+.vote-pod__inner{
+	display: inline-block;
 	vertical-align: top;
 	margin: 0 33px;
+}
+
+.vote-pod__inner__icon{
+	position: absolute;
+	color: #FFF;
+	font-size: 100px;
+	line-height: $vote-pod-height;
+	width: $vote-pod-height + 9px; //visual align
+	text-align: center;
 }
