@@ -23,6 +23,9 @@ end
 
 gem 'jquery-rails'
 
+# To make HTTP requests
+gem 'rest-client'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -36,12 +39,10 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'debugger'
+gem 'debugger'
 
 gem 'better_errors'
-gem 'binding_of_caller'
-
-gem 'soundcloud'
+gem 'binding_of_caller', '>= 0.7'
 
 #For fontello
 gem 'font_assets'

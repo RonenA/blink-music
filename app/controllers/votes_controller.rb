@@ -4,14 +4,14 @@ class VotesController < ApplicationController
 	def judge
 	end
 
-	#Array of soundcloud track id's current_user should vote on
+	#Array of track id's current_user should vote on
 	def candidates
 		render :json => current_user.tracks_to_vote
 	end
 
 	def submit
 		@vote = Vote.where(:user_id => current_user.id,
-							 				 :soundcloud_track_id => params[:soundcloud_track_id]).first
+                       :track_id => params[:track_id]).first
 
 		if @vote.update_attribute(:liked, params[:liked])
 			render :json => {}
