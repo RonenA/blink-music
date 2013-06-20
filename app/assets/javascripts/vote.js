@@ -2,28 +2,50 @@
 //TODO: Remove
 
 var snippetLength = 2000;
-var voteSpinner;
 
 $(function(){
 	getCandidates().done(function(trackIds){
-		var sounds = getSounds(trackIds);
+		var sounds = _.map(trackIds, getSound);
+		var voteSpinner = new Spinner( document.getElementById('spinner') );
 
-		playNextSound(sounds);
-		voteSpinner = new Spinner( document.getElementById('spinner') );
-		voteSpinner.spin();
+		var loop, finishLoop;
+		loop = function(){
+			var sound = sounds.shift();
+			var trackId = trackIds.shift();
+
+			sound.done(function(sound){
+				playSound(sound);
+				startSpinner(voteSpinner);
+
+				finishLoop = function(liked) {
+					stopSound(sound);
+					submitVote(liked, trackId);
+					if (sounds.length > 0){
+						loop();
+					} else {
+						console.log('Done all songs.');
+					}
+				};
+
+				setTimeout(function(){
+					finishLoop(false);
+				}, snippetLength);
+			});
+		};
+		loop();
 
 		$('.js-vote-track').click(function(){
-			voteHandler($(this).data('liked'), sounds, trackIds);
+			finishLoop($(this).data('liked'));
 		});
 
 		$(document).keypress(function(e){
 			if (e.which == 97){
-				voteHandler(true, sounds, trackIds);
 				$('.btn--like').cssAnimate('pulse', 500);
+				finishLoop(true);
 			}
 			else if(e.which == 108){
-				voteHandler(false, sounds, trackIds);
 				$('.btn--dislike').cssAnimate('pulse', 500);
+				finishLoop(false);
 			}
 		});
 
@@ -57,34 +79,13 @@ var getTrackData = function(trackId){
 };
 
 // Get deferred stream from iTunes
-//  getSound :: Integer -> Deferred <audio>
+//  getSound :: Integer -> Deferred $(<audio>)
 var getSound = function(trackId){
 	return getTrackData(trackId).pipe(function(trackData){
 		var source = trackData.results[0].previewUrl;
 		return $('<audio>', {src: source, preload: 'auto'});
 	});
 };
-
-// Get array of deferred sounds
-//  getSounds :: [Integer] -> [Deferred <audio>]
-var getSounds = function(trackIds){
-	var sounds = [];
-
-	for(var i=0; i < trackIds.length; i++){
-		sounds[i] = getSound(trackIds[i]);
-	}
-
-	return sounds;
-};
-
-// Cast vote and play next track
-//  voteHandler :: Bool -> [Deferred <audio>] -> [Integer] -> ()
-var voteHandler = function(liked, sounds, trackIds){
-	stopSound();
-	submitVote(liked, trackIds.shift());
-	sounds.shift();
-	playNextSound(sounds);
-}
 
 // Ajax put vote
 //  submitVote :: Bool -> Integer -> ()
@@ -100,34 +101,21 @@ var submitVote = function(liked, trackId){
 	});
 };
 
-// Play the sound at the beginning of the array
-//  playNextSound :: Deferred <audio> -> ()
-var playNextSound = function(sounds){
-	if (sounds.length == 0){
-		alert("No tracks");
-	}
-	else{
-		sounds[0].done(function(sound){
-			$('body').append(sound);
-			sound[0].play();
-			startSpinner();
-			setTimeout(function(){
-				sound[0].pause();
-			}, snippetLength);
-		});
-	}
+//  playSound :: $(<audio>) -> ()
+var playSound = function(sound){
+	$('body').append(sound);
+	sound[0].play();
 };
 
-// Stop the sound that is currently playing
-//  stopSound :: ()
-var stopSound = function(){
-	var sound = $('audio');
+//  stopSound :: $(<audio>) -> ()
+var stopSound = function(sound){
 	sound[0].pause();
 	sound.remove();
 };
 
-var startSpinner = function(){
+//  startSpinner :: Spinner -> ()
+var startSpinner = function(spinner){
 	console.log('pop');
 	//$('.vote-pod__inner__icon').cssAnimate('pulse', 500);  pop the play icon
-	voteSpinner.reset();
+	spinner.spin();
 }
