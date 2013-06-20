@@ -5,14 +5,17 @@
 
 @import "compass/reset";
 @import "compass/css3";
+@import "mixins";
 
 $helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $red: #F10000;
 $green: #53CF00;
 
 body{
-	background-color: black;
-	font-family: $helvetica;
+	background-color: #1B4F81;
+	font-family: Avenir;
+	color: white;
+	-webkit-font-smoothing: antialiased;
 }
 
 button{
@@ -20,34 +23,75 @@ button{
 	-webkit-appearance: none;
 }
 
-.btn{
-	cursor: pointer;
+div{
+	@include box-sizing(border-box);
+}
 
+h1{
+	font-size: 95px;
+	font-weight: bold;
+	margin-bottom: 22px;
+}
+
+.container{
+	margin-top: 70px;
+	margin-left: 70px;
+}
+
+$box-height: 110px;
+
+.box{
 	@include border-radius(5px);
-	padding: 20px 30px;
-	margin: 0;
+	border: 3px solid white;
+
+	padding: 0 30px;
 	display: inline-block;
 
-	font-size: 50px;
-	font-family: $helvetica;
+	line-height: $box-height;
+	font-size: 60px;
 	font-weight: 100;
-	color: white;
+	text-align: center;
+
+	&.key{
+		width: 115px;
+		@include box-shadow(0 3px 0px 3px #FFF);
+		border: none;
+		border-top: 2px solid #FFF;
+
+		&.pressed{
+			border: 2px solid #FFF;
+			@include box-shadow(none);
+			position: relative;
+			top: 5px;
+		}
+	}
 }
 
-@mixin button-color($color){
-						background-color: $color;
-	&:hover	{ background-color: lighten($color, 3%)}
-	&:active{	background-color: darken($color, 5%)}
+.box-label{
+	font-size: 45px;
+	line-height: $box-height;
+	font-weight: 100;
+
+	margin: 0 24px;
 }
 
-.btn--dislike{
-	@include button-color($red);
+.btn{
+	@extend .box;
+	cursor: pointer;
 }
 
-.btn--like{
-	@include button-color($green);
+.corner-popup{
+	position: absolute;
+	top: 70px;
+	right: 70px;
+
+	font-size: 100px;
+
+	@include animation-duration(0.3s);
 }
 
+
+//Layout
 .l-center-block{
 	display: block;
 	margin: 0 auto;

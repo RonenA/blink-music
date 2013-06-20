@@ -6,7 +6,6 @@ var snippetLength = 2000;
 $(function(){
 	getCandidates().done(function(trackIds){
 		var sounds = _.map(trackIds, getSound);
-		var voteSpinner = new Spinner( document.getElementById('spinner') );
 
 		var liked;
 
@@ -17,7 +16,7 @@ $(function(){
 
 			sound.done(function(sound){
 				playSound(sound);
-				startSpinner(voteSpinner);
+				startLoadingBar();
 
 				liked = defer(false, snippetLength);
 				liked.done(function(liked){
@@ -33,17 +32,16 @@ $(function(){
 		};
 		loop();
 
-		$('.js-vote-track').click(function(){
-			liked.resolve($(this).data('liked'));
-		});
-
 		$(document).keypress(function(e){
 			if (e.which == 97){
-				$('.btn--like').cssAnimate('pulse', 500);
+				//$('.js-like-key').cssAnimate('pulse', 500);
+				animateKeyPress($('.js-like-key'));
+				animateCornerPopup('<i class="icon-heart"></i>');
 				liked.resolve(true);
 			}
 			else if(e.which == 108){
-				$('.btn--dislike').cssAnimate('pulse', 500);
+				animateKeyPress($('.js-dislike-key'));
+				animateCornerPopup('<i class="icon-cancel-circled"></i>');
 				liked.resolve(false);
 			}
 		});
@@ -112,12 +110,25 @@ var stopSound = function(sound){
 	sound.remove();
 };
 
-//  startSpinner :: Spinner -> ()
-var startSpinner = function(spinner){
-	console.log('pop');
-	//$('.vote-pod__inner__icon').cssAnimate('pulse', 500);  pop the play icon
-	spinner.spin();
+var startLoadingBar = function(){
+	var loadingBar = $('.loading-bar-bg');
+	loadingBar.removeClass('animated load');
+	window.setTimeout( function(){ loadingBar.addClass('animated load'); });
 };
+
+var animateKeyPress = function(key){
+	key.addClass('pressed');
+	window.setTimeout(function(){ key.removeClass('pressed'); }, 200);
+}
+
+var animateCornerPopup = function(contents){
+	var cornerPopup = $('.corner-popup');
+
+	cornerPopup.html(contents).removeClass('fadeOutDown').addClass('bounceIn');
+	window.setTimeout(function(){
+		cornerPopup.removeClass('bounceIn').addClass('fadeOutDown');
+	}, 800);
+}
 
 // Produces the value that was input, but only after a delay.
 //  defer :: a -> Integer -> Deferred a

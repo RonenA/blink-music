@@ -102,6 +102,6 @@ $.fn.cssAnimate = function(animation, duration){
 
 	el.addClass("animated").addClass(animation);
 	setTimeout(function(){
-		el.removeClass("animated").removeClass(animation);
+		el.removeClass(animation);
 	}, duration);
 };

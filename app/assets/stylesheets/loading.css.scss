@@ -1,0 +1,42 @@
+@import "mixins";
+
+.loading-bar-bg{
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	background-color: rgba(black, 0.2);
+	width: 0;
+	z-index: -1;
+}
+
+@-webkit-keyframes load {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+@-o-keyframes load {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+@-moz-keyframes load {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+@-ms-keyframes load {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+@keyframes load {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+.load{
+  @include animation-name(load);
+  @include animation-duration(2s);
+  @include animation-timing-function(cubic-bezier(0.6, 0.04, 0.98, 0.335));
+}

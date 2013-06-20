@@ -42,7 +42,11 @@ i[class^="icon-"]:before, i[class*=" icon-"]:before {
 }
 
 
+.icon-heart:before { content: '\e804'; } /* '' */
+.icon-cancel-circled:before { content: '\e807'; } /* '' */
 .icon-play-circled:before { content: '\e802'; } /* '' */
 .icon-play:before { content: '\e803'; } /* '' */
+.icon-music:before { content: '\e806'; } /* '' */
+.icon-headphones:before { content: '\e805'; } /* '' */
 .icon-thumbs-up:before { content: '\e800'; } /* '' */
 .icon-thumbs-down:before { content: '\e801'; } /* '' */

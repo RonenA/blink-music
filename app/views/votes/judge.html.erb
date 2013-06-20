@@ -3,16 +3,18 @@
 	<%= javascript_include_tag "vote-graphics" %>
 <% end %>
 
-
-<div class="vote-pod l-absolute-center">
-	<button class="js-vote-track btn btn--like vote-pod__outer" data-liked="true">
-		<i class="icon-thumbs-up"></i>
-	</button>
-	<div class="vote-pod__inner">
-		<i class="icon-play vote-pod__inner__icon"></i>
-		<canvas width="200" height="200" id="spinner" class=""></canvas>
-	</div>
-	<button class="js-vote-track btn btn--dislike vote-pod__outer" data-liked="false">
-		<i class="icon-thumbs-down"></i>
-	</button>
+<div class="loading-bar-bg">
 </div>
+
+<div class="container">
+	<h1>Don't think.</h1>
+
+	<div class="box key js-like-key">A</div>
+	<label class="box-label">to like,</label>
+	<div class="box key js-dislike-key">L</div>
+	<label class="box-label">to pass</label>
+</div>
+
+<div class="corner-popup animated">
+</div>
+

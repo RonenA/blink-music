@@ -1,0 +1,22 @@
+//Animations
+@mixin animation-timing-function($fun){
+  -webkit-transition-timing-function: $fun;
+     -moz-transition-timing-function: $fun;
+      -ms-transition-timing-function: $fun;
+       -o-transition-timing-function: $fun;
+          transition-timing-function: $fun;
+}
+
+@mixin animation-name($name){
+  -webkit-animation-name: $name;
+  -moz-animation-name: $name;
+  -o-animation-name: $name;
+  animation-name: $name;
+}
+
+@mixin animation-duration($duration){
+  -webkit-animation-duration: $duration;
+  -moz-animation-duration: $duration;
+  -o-animation-duration: $duration;
+  animation-duration: $duration;
+}
