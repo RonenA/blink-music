@@ -22,7 +22,7 @@ class VotesController < ApplicationController
 	end
 
   def results
-    @tracks = current_user.like_votes.map(&:get_track_properties)
+    @tracks = current_user.liked_tracks
     render :json => @tracks
   end
 

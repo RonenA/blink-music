@@ -4,15 +4,15 @@
 var snippetLength = 2000;
 
 $(function(){
-	getCandidates().done(function(trackIds){
-		var sounds = _.map(trackIds, getSound);
+	getCandidates().done(function(tracksInfo){
+		var sounds = getSounds(tracksInfo);
 
 		var liked;
 
 		var loop;
 		loop = function(){
 			var sound = sounds.shift();
-			var trackId = trackIds.shift();
+			var trackInfo = tracksInfo.shift();
 
 			sound.done(function(sound){
 				playSound(sound);
@@ -21,7 +21,7 @@ $(function(){
 				liked = defer(false, snippetLength);
 				liked.done(function(liked){
 					stopSound(sound);
-					submitVote(liked, trackId);
+					submitVote(liked, trackInfo.id);
 					if (sounds.length > 0){
 						loop();
 					} else {
@@ -81,6 +81,13 @@ var getSound = function(trackId){
 	return getTrackData(trackId).pipe(function(trackData){
 		var source = trackData.results[0].previewUrl;
 		return $('<audio>', {src: source, preload: 'auto'});
+	});
+};
+
+//  getSounds :: [Map] -> [Deferred $(<audio>)]
+var getSounds = function(tracksInfo){
+	return _.map(tracksInfo, function(trackInfo){
+		return getSound(trackInfo.id_from_vendor);
 	});
 };
 

@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-
   attr_accessible :token
   validates_presence_of :token
 
@@ -14,38 +13,31 @@ class User < ActiveRecord::Base
     self.token = new_token
   end
 
-  #returns ids of newly added tracks
+  # Returns a list of newly added tracks
   def get_new_tracks
-    track_ids = get_music(:term => :coldplay).map { |t| t[:trackId] }
-
     transaction do
-      track_ids.select do |id|
-        self.votes.create { |v| v.track_id = id }
+      tracks = Track.create_tracks(:term => :coldplay)
+
+      tracks.select do |t|
+        self.votes.create { |v| v.track = t }
       end
     end
   end
 
-  def votes_as(liked)
-    self.votes.where(:liked => liked)
+  def tracks_voted(liked)
+    self.votes.where(:liked => liked).includes(:track)
+              .map(&:track)
   end
 
   def tracks_to_vote
-    tracks_to_vote = votes_as(nil).pluck(:track_id)
+    tracks_to_vote = tracks_voted(nil)
     if tracks_to_vote.length < 10
       tracks_to_vote += get_new_tracks
     end
     tracks_to_vote
   end
 
-  def like_votes
-    votes_as(true)
-  end
-
-  def get_music(options={})
-    options.reverse_merge!(:media => :music)
-
-    url = MakeURL.make_url('https://itunes.apple.com/search', options)
-    response = RestClient.get(url)
-    JSON.parse(response).with_indifferent_access[:results]
+  def liked_tracks
+    tracks_voted(true)
   end
 end
