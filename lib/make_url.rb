@@ -1,3 +1,4 @@
+# TODO: Make full-fledged requests, for DRYness
 module MakeURL
   def self.make_url(url, params={})
     url + '?' + params.keys.zip(params.values).map do |k, v| 

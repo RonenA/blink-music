@@ -21,6 +21,11 @@ class VotesController < ApplicationController
 		end
 	end
 
+  def results
+    @tracks = current_user.like_votes.map(&:get_track_properties)
+    render :json => @tracks
+  end
+
 	#TODO: Remove
 	def kill_cookie
 		session[:token] = nil

@@ -1,6 +1,3 @@
-require 'restclient'
-require 'make_url'
-
 class User < ActiveRecord::Base
 
   attr_accessible :token
@@ -28,12 +25,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  def votes_as(liked)
+    self.votes.where(:liked => liked)
+  end
+
   def tracks_to_vote
-    tracks_to_vote = self.votes.where(:liked => nil).pluck(:track_id)
+    tracks_to_vote = votes_as(nil).pluck(:track_id)
     if tracks_to_vote.length < 10
       tracks_to_vote += get_new_tracks
     end
     tracks_to_vote
+  end
+
+  def like_votes
+    votes_as(true)
   end
 
   def get_music(options={})

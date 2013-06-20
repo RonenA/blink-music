@@ -17,13 +17,16 @@ $(function(){
 				playSound(sound);
 				startSpinner(voteSpinner);
 
+				// TODO: Simplify flow control more. Also, when this is called
+				// by an event, multiple loops run in parallel.
 				finishLoop = function(liked) {
 					stopSound(sound);
 					submitVote(liked, trackId);
 					if (sounds.length > 0){
 						loop();
 					} else {
-						console.log('Done all songs.');
+						// TODO: An alert always happens right before this.
+						window.location.pathname = '/results'
 					}
 				};
 
