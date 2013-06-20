@@ -8,7 +8,9 @@ $(function(){
 		var sounds = _.map(trackIds, getSound);
 		var voteSpinner = new Spinner( document.getElementById('spinner') );
 
-		var loop, finishLoop;
+		var liked;
+
+		var loop;
 		loop = function(){
 			var sound = sounds.shift();
 			var trackId = trackIds.shift();
@@ -17,38 +19,32 @@ $(function(){
 				playSound(sound);
 				startSpinner(voteSpinner);
 
-				// TODO: Simplify flow control more. Also, when this is called
-				// by an event, multiple loops run in parallel.
-				finishLoop = function(liked) {
+				liked = defer(false, snippetLength);
+				liked.done(function(liked){
 					stopSound(sound);
 					submitVote(liked, trackId);
 					if (sounds.length > 0){
 						loop();
 					} else {
-						// TODO: An alert always happens right before this.
 						window.location.pathname = '/results'
 					}
-				};
-
-				setTimeout(function(){
-					finishLoop(false);
-				}, snippetLength);
+				});
 			});
 		};
 		loop();
 
 		$('.js-vote-track').click(function(){
-			finishLoop($(this).data('liked'));
+			liked.resolve($(this).data('liked'));
 		});
 
 		$(document).keypress(function(e){
 			if (e.which == 97){
 				$('.btn--like').cssAnimate('pulse', 500);
-				finishLoop(true);
+				liked.resolve(true);
 			}
 			else if(e.which == 108){
 				$('.btn--dislike').cssAnimate('pulse', 500);
-				finishLoop(false);
+				liked.resolve(false);
 			}
 		});
 
@@ -100,7 +96,7 @@ var submitVote = function(liked, trackId){
 		data: { liked: liked }
 	}).fail(function (jqXHR, textStatus, errorThrown) {
 		//TODO: Handle errors better
-		alert("Error: " + textStatus);
+		//alert("Error: " + textStatus);
 	});
 };
 
@@ -121,4 +117,16 @@ var startSpinner = function(spinner){
 	console.log('pop');
 	//$('.vote-pod__inner__icon').cssAnimate('pulse', 500);  pop the play icon
 	spinner.spin();
-}
+};
+
+// Produces the value that was input, but only after a delay.
+//  defer :: a -> Integer -> Deferred a
+var defer = function(val, delay) {
+	var result = $.Deferred();
+
+	setTimeout(function(){
+		result.resolve(val);
+	}, delay);
+
+	return result;
+};
