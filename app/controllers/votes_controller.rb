@@ -23,7 +23,6 @@ class VotesController < ApplicationController
 
   def results
     @tracks = current_user.liked_tracks
-    render :json => @tracks
   end
 
 	#TODO: Remove

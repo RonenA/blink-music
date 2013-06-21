@@ -2,8 +2,28 @@
 //TODO: Remove
 
 var snippetLength = 2000;
+var readySetGo = ["Set...", "Go!"];
 
 $(function(){
+	$('.js-start-button').click(function(){
+		$('#page-home').hide();
+		$('#page-get-ready').show();
+
+		var swapHeading = setInterval(function(){
+			if (readySetGo.length > 0){
+				$('.js-ready-heading').text( readySetGo.shift() );
+			} else {
+				$('.js-ready-heading').text('');
+				startBlast();
+				$('.instructions').addClass('is-mini');
+				clearInterval(swapHeading);
+			}
+		}, 1500);
+
+	});
+});
+
+var startBlast = function(){
 	getCandidates().done(function(tracksInfo){
 		var sounds = getSounds(tracksInfo);
 
@@ -34,20 +54,18 @@ $(function(){
 
 		$(document).keypress(function(e){
 			if (e.which == 97){
-				//$('.js-like-key').cssAnimate('pulse', 500);
 				animateKeyPress($('.js-like-key'));
-				animateCornerPopup('<i class="icon-heart"></i>');
+				animateFeedbackIcon('<i class="icon-heart"></i>');
 				liked.resolve(true);
 			}
 			else if(e.which == 108){
 				animateKeyPress($('.js-dislike-key'));
-				animateCornerPopup('<i class="icon-cancel-circled"></i>');
+				animateFeedbackIcon('<i class="icon-cancel-circled"></i>');
 				liked.resolve(false);
 			}
 		});
-
 	});
-});
+};
 
 // Get array of iTunes track ids
 //  getCandidates :: Deferred [Integer]
@@ -128,12 +146,12 @@ var animateKeyPress = function(key){
 	window.setTimeout(function(){ key.removeClass('pressed'); }, 200);
 }
 
-var animateCornerPopup = function(contents){
-	var cornerPopup = $('.corner-popup');
+var animateFeedbackIcon = function(contents){
+	var icon = $('.feedback-icon');
 
-	cornerPopup.html(contents).removeClass('fadeOutDown').addClass('bounceIn');
+	icon.html(contents).removeClass('fadeOutDown').addClass('bounceIn');
 	window.setTimeout(function(){
-		cornerPopup.removeClass('bounceIn').addClass('fadeOutDown');
+		icon.removeClass('bounceIn').addClass('fadeOutDown');
 	}, 800);
 }
 

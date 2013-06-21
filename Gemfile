@@ -46,3 +46,9 @@ gem 'binding_of_caller', '>= 0.7'
 
 #For fontello
 gem 'font_assets'
+
+#For modular scale font sizing
+gem 'modular-scale'
+
+#For making server stfu about could not determine content-length
+gem 'thin'

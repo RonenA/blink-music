@@ -17,7 +17,11 @@ class Track < ActiveRecord::Base
   def self.create_from_vendor_info(params)
     create do |t|
       t.id_from_vendor = params[:trackId]
-      t.name           = params[:trackName]
+      t.track_name     = params[:trackName]
+      t.artist_name    = params[:artistName]
+      t.album_name     = params[:collectionName]
+      t.artwork_url    = params[:artworkUrl100]
+      t.view_url       = params[:viewURL]
     end
   end
 end

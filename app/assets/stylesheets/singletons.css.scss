@@ -1,0 +1,11 @@
+$feedback-icon-size: 140px;
+.feedback-icon{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -$feedback-icon-size/2;
+	margin-left: -$feedback-icon-size/2;
+
+	font-size: 100px;
+	@include animation-duration(0.3s);
+}

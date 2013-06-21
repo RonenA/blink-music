@@ -1,0 +1,33 @@
+.instructions{
+	margin-bottom: 40px;
+	font-size: ms(2);
+	@include transition(font-size 0.5s);
+
+	&.is-mini{
+		font-size: ms(1);
+		.key{ width: 54px }
+		opacity: 0.5;
+	}
+}
+
+.key{
+	width: 85px;
+	@include box-shadow(0 3px 0px 3px #FFF);
+	border: none;
+	border-top: 2px solid #FFF;
+	font-size: 1em;
+
+	&.pressed{
+		border: 2px solid #FFF;
+		@include box-shadow(none);
+		position: relative;
+		top: 5px;
+	}
+}
+
+.key-label{
+	line-height: ($box-height/45);
+	font-weight: 100;
+
+	margin: 0 0.5em;
+}

@@ -3,17 +3,21 @@
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
+/* Modular Scale: 95px @ 1:1.618 */
+
 @import "compass/reset";
 @import "compass/css3";
 @import "mixins";
+@import "modular-scale";
 
 $helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$avenir: Avenir;
 $red: #F10000;
 $green: #53CF00;
 
 body{
 	background-color: #1B4F81;
-	font-family: Avenir;
+	font-family: $avenir;
 	color: white;
 	-webkit-font-smoothing: antialiased;
 }
@@ -28,77 +32,11 @@ div{
 }
 
 h1{
-	font-size: 95px;
+	font-size: ms(5, 12px);
 	font-weight: bold;
 	margin-bottom: 22px;
 }
 
 .container{
-	margin-top: 70px;
-	margin-left: 70px;
-}
-
-$box-height: 110px;
-
-.box{
-	@include border-radius(5px);
-	border: 3px solid white;
-
-	padding: 0 30px;
-	display: inline-block;
-
-	line-height: $box-height;
-	font-size: 60px;
-	font-weight: 100;
-	text-align: center;
-
-	&.key{
-		width: 115px;
-		@include box-shadow(0 3px 0px 3px #FFF);
-		border: none;
-		border-top: 2px solid #FFF;
-
-		&.pressed{
-			border: 2px solid #FFF;
-			@include box-shadow(none);
-			position: relative;
-			top: 5px;
-		}
-	}
-}
-
-.box-label{
-	font-size: 45px;
-	line-height: $box-height;
-	font-weight: 100;
-
-	margin: 0 24px;
-}
-
-.btn{
-	@extend .box;
-	cursor: pointer;
-}
-
-.corner-popup{
-	position: absolute;
-	top: 70px;
-	right: 70px;
-
-	font-size: 100px;
-
-	@include animation-duration(0.3s);
-}
-
-
-//Layout
-.l-center-block{
-	display: block;
-	margin: 0 auto;
-}
-
-.l-absolute-center{
-	position: absolute;
-	top: 50%;
-	left: 50%;
+	margin: 60px;
 }
