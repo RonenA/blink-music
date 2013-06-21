@@ -26,6 +26,9 @@ gem 'jquery-rails'
 # To make HTTP requests
 gem 'rest-client'
 
+# XML parser
+gem 'nokogiri'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

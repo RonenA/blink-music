@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   # Returns a list of newly added tracks
   def get_new_tracks
     transaction do
-      tracks = Track.create_tracks(:term => :coldplay)
+      tracks = Track.sample(50)
 
       tracks.select do |t|
         self.votes.create { |v| v.track = t }

@@ -10,6 +10,7 @@ class VotesController < ApplicationController
 	end
 
 	def submit
+    # TODO: Find it by vote id, though confirming user_id for security.
 		@vote = Vote.where(:user_id => current_user.id,
                        :track_id => params[:track_id]).first
 
