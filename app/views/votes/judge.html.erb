@@ -1,4 +1,8 @@
 <% content_for :head do %>
+	<script>
+		var tracksInfo = <%=j @tracks.to_json.html_safe %>;
+	</script>
+
 	<%= javascript_include_tag "vote" %>
 	<%= javascript_include_tag "vote-graphics" %>
 <% end %>
