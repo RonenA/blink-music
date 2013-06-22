@@ -96,7 +96,7 @@ var getTrackData = function(trackId){
 // Get deferred stream from iTunes
 //  getSound :: Integer -> Deferred $(<audio>)
 var getSound = function(trackId){
-	return getTrackData(trackId).pipe(function(trackData){
+	return getTrackData(trackId).then(function(trackData){
 		var source = trackData.results[0].previewUrl;
 		return $('<audio>', {src: source, preload: 'auto'});
 	});
