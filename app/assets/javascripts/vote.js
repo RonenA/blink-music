@@ -39,6 +39,11 @@ var startBlast = function(sounds){
 		var trackInfo = tracksInfo[i];
 
 		sound.done(function(sound) {
+			if(!isReady(sound)) {
+				++i; loop();
+				return;
+			}
+
 			playSound(sound);
 			startLoadingBar();
 
@@ -98,6 +103,11 @@ var submitVote = function(liked, trackId){
 		//TODO: Handle errors better
 		//alert("Error: " + textStatus);
 	});
+};
+
+//  isReady :: $(<audio>) -> Bool
+var isReady = function(sound) {
+	return sound[0].readyState >= 3;
 };
 
 //  playSound :: $(<audio>) -> ()
