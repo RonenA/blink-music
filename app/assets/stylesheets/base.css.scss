@@ -12,11 +12,10 @@
 
 $helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $avenir: Avenir;
-$red: #F10000;
-$green: #53CF00;
+$navy: #1B4F81;
 
 body{
-	background-color: #1B4F81;
+	background-color: $navy;
 	font-family: $avenir;
 	color: white;
 	-webkit-font-smoothing: antialiased;
@@ -31,6 +30,14 @@ div{
 	@include box-sizing(border-box);
 }
 
+a{
+	text-decoration: none;
+	color: #3DD1FF;
+	font-weight: bold;
+
+	&:hover {text-decoration: underline}
+}
+
 h1{
 	font-size: ms(5, 12px);
 	font-weight: bold;
@@ -39,4 +46,13 @@ h1{
 
 .container{
 	margin: 60px;
+}
+
+.media__image{
+	float: left;
+	margin-right: 16px;
+}
+
+.media__body{
+	overflow: hidden;
 }

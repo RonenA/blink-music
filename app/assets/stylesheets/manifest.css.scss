@@ -1,5 +1,7 @@
 @import "compass/reset";
 @import "compass/css3";
+@import "compass/utilities/general/clearfix";
+
 @import "modular-scale";
 
 @import "mixins";
@@ -12,5 +14,5 @@
 
 @import "box";
 @import "loading";
-
 @import "instructions";
+@import "tracks";

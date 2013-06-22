@@ -19,13 +19,16 @@ $box-height: 110;
 	cursor: pointer;
 	font-family: $avenir;
 	color: white;
+	font-size: ms(1);
 
 	&:hover{
 		background-color: rgba(black, 0.1);
+		text-decoration: none;
 		@include transition(background-color 0.2s);
 	}
 }
 
-.btn-large{
+.btn--large{
+	@extend .btn;
 	font-size: ms(3);
 }

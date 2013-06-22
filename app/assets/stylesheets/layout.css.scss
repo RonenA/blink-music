@@ -14,3 +14,9 @@
 	position: absolute;
 	bottom: 0;
 }
+
+.l-ellip{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

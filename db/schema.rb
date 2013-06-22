@@ -11,17 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130621034404) do
+ActiveRecord::Schema.define(:version => 20130622052658) do
 
   create_table "tracks", :force => true do |t|
     t.string   "id_from_vendor"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.text     "track_name"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.text     "name"
     t.text     "artist_name"
     t.text     "album_name"
     t.text     "artwork_url"
     t.text     "view_url"
+    t.text     "preview_url"
+    t.text     "album_view_url"
+    t.text     "artist_view_url"
   end
 
   create_table "users", :force => true do |t|

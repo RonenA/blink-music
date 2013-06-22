@@ -1,0 +1,64 @@
+.track-list{
+	li{
+		@include clearfix;
+		border-bottom: 1px solid rgba(white, 0.12);
+	}
+}
+
+.track__image {
+	@extend .media__image;
+	height: 100px;
+
+	position: relative;
+
+	&:hover .track__play-icon{ @include opacity(1) }
+}
+
+.track__play-icon{
+	$play_i_size: 32px;
+
+	position: absolute;
+	font-size: $play_i_size;
+	@include center-absolute(($play_i_size+2), ($play_i_size+2));
+
+	@include border-radius(50%);
+	color: white;
+	background-color: black;
+	width: $play_i_size;
+	height: $play_i_size;
+	padding: 2px;
+
+	@include opacity(0.5);
+}
+
+.track__body{
+	@extend .media__body;
+	padding-top: 7px;
+	padding-bottom: 10px;
+}
+
+.track__name{
+	@extend .l-ellip;
+	line-height: 1.2em;
+	display: block;
+	font-weight: bold;
+	font-size: ms(1);
+	margin-bottom: 2px;
+	margin-top: 8px;
+}
+
+.track__artist{
+	@extend .l-ellip;
+	display: block;
+	line-height: 1.2em;
+}
+
+.track__album{
+	@extend .l-ellip;
+	display: block;
+	line-height: 1.2em;
+}
+
+.track__link{
+	float: right;
+}
