@@ -30,4 +30,8 @@ module ApplicationHelper
 		"https://twitter.com/share?" + uri.query
 	end
 
+	def tagline
+		"Discover new music by voting on two-second snippets."
+	end
+
 end
