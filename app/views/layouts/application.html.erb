@@ -13,7 +13,11 @@
 </head>
 <body>
 
-<%= yield %>
+	<%= render :partial => "layouts/support_errors" %>
+
+	<div class="main">
+		<%= yield %>
+	</div>
 
 </body>
 </html>

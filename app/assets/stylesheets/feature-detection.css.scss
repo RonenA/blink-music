@@ -1,0 +1,15 @@
+.no-support-error	{ display: none }
+
+.no-m4a{
+	.main 					{ display: none }
+	.no-audio-error { display: block }
+}
+
+.touch{
+	.main 					{ display: none }
+	.no-touch-error { display: block }
+}
+
+.no-m4a.touch{ //Don't display both errors
+	.no-audio-error	{ display: none }
+}

@@ -13,4 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require underscore
+//= require modernizr
 //= require bootstrap-tooltip
+//= require feature-detection
