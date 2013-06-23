@@ -67,6 +67,7 @@ GEM
     font_assets (0.1.8)
       rack
     fssm (0.2.10)
+    google-analytics-rails (0.0.4)
     hike (1.2.3)
     i18n (0.6.1)
     journey (1.0.4)
@@ -155,6 +156,7 @@ DEPENDENCIES
   compass-rails
   debugger
   font_assets
+  google-analytics-rails
   jquery-rails
   kaminari
   modular-scale

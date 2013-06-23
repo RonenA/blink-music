@@ -9,32 +9,17 @@
 	blast
 <% end %>
 
-<div class="loading-bar-bg">
-</div>
+<div class="loading-bar-bg"></div>
 
 <div class="container">
+	<%= render :partial => "home" %>
 
-	<div id="page-home">
-		<h1 class="home-heading">Trackblast</h1>
-		<h2 class="home-lead"><%= tagline %></h2>
-
-		<nav class="l-bottom-right home-nav">
-			<ul>
-				<% if current_user.like_votes.exists? %>
-					<li><%= link_to "My Likes", results_path(current_user.share_token), :class => "icon-heart" %></li>
-				<% end %>
-				<li><%= mail_to "hello@trackblast.com", "Contact Us", :class => "icon-email" %></li>
-			</ul>
-		</nav>
-
-		<button class="btn--large btn--blue js-start-button">
-			Let's Play <i class="icon-play"></i>
-		</button>
-
-	</div>
-
+	<%# TODO: Maybe rename this from get-ready to something
+						else. It's kind of the main game. %>
 	<div id="page-get-ready" style="display:none">
 		<h1 class="js-ready-heading ready-heading animated">Ready?</h1>
+		<%= link_to "Skip to likes", results_url(current_user.share_token),
+				:class => "skip-button icon-heart"%>
 	</div>
 
 	<div class="instructions l-bottom">
@@ -43,9 +28,7 @@
 		<div class="box key js-dislike-key">L</div>
 		<label class="key-label">to pass</label>
 	</div>
-
 </div>
 
-<div class="feedback-icon animated">
-</div>
+<div class="feedback-icon animated"></div>
 

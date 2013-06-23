@@ -59,4 +59,8 @@ gem 'modular-scale'
 #For making server stfu about could not determine content-length
 gem 'thin'
 
+#For building urls
 gem 'addressable'
+
+#Google analytics
+gem 'google-analytics-rails'
