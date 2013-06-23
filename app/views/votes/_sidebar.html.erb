@@ -2,13 +2,26 @@
 	<%= link_to root_url do %>
 		<h1>Trackblast</h1>
 	<% end %>
-	<h2 class="icon-heart red-icon">Your likes</h2>
-	<%= link_to "#", :class => "btn btn--blue" do %>
-		Play again  <i class="icon-play"></i>
+
+	<% if current_user == @user %>
+
+		<h2 class="icon-heart red-icon">Your likes</h2>
+		<%= link_to "#", :class => "btn btn--blue" do %>
+			Play again  <i class="icon-play"></i>
+		<% end %>
+
+		<div class="l-bottom sidebar__share">
+			Share your blast
+			<%= render :partial => "share_icons" %>
+		</div>
+
+	<% else %>
+
+		<h2>Discover new music by voting on two-second snippets.</h2>
+		<%= link_to "#", :class => "btn btn--blue" do %>
+			Play Now  <i class="icon-play"></i>
+		<% end %>
+
 	<% end %>
 
-	<div class="l-bottom sidebar__share">
-		Share your blast
-		<%= render :partial => "share_icons" %>
-	</div>
 </div>
