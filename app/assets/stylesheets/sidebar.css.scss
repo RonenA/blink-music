@@ -1,0 +1,45 @@
+$sidebar-width: 30%;
+.main-content{
+	width: 100% - $sidebar-width;
+}
+
+.sidebar{
+	width: $sidebar-width;
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	top: 0;
+
+	padding: 50px 30px;
+
+	h1{
+		font-size: ms(2);
+		margin-bottom: 0;
+	}
+
+	h2{
+		font-size: ms(1);
+		font-weight: normal;
+		margin-bottom: ms(1);
+	}
+
+	.l-bottom{
+		bottom: 35px;;
+	}
+}
+
+.sidebar__share{
+	font-size: ms(1);
+}
+
+.share__icons{
+	margin-top: 10px;
+	font-size: ms(2);
+
+	a{
+		color: rgba(white, 0.6);
+		&:hover i{ color: white; }
+	}
+
+	.icon-email{ margin-left: 3px; } //visual alignment
+}

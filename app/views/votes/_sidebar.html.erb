@@ -1,0 +1,14 @@
+<div class="sidebar">
+	<%= link_to root_url do %>
+		<h1>Trackblast</h1>
+	<% end %>
+	<h2 class="icon-heart">Your likes</h2>
+	<%= link_to "#", :class => "btn" do %>
+		Play again  <i class="icon-play"></i>
+	<% end %>
+
+	<div class="l-bottom sidebar__share">
+		Share your blast
+		<%= render :partial => "share_icons" %>
+	</div>
+</div>

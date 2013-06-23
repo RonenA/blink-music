@@ -1,5 +1,5 @@
 {
-  "name": "blink-music",
+  "name": "trackblast",
   "css_prefix_text": "icon-",
   "css_use_suffix": false,
   "glyphs": [
@@ -28,10 +28,40 @@
       "src": "fontawesome"
     },
     {
+      "uid": "627abcdb627cb1789e009c08e2678ef9",
+      "css": "twitter",
+      "code": 59404,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "47bd87a650e95b97f947d275ed968efe",
+      "css": "facebook-squared",
+      "code": 59405,
+      "src": "entypo"
+    },
+    {
+      "uid": "e0d15ef5945000f5f264acc35494002f",
+      "css": "basket",
+      "code": 59400,
+      "src": "typicons"
+    },
+    {
       "uid": "52177c3387cdac48d6ed18bebe84c34a",
       "css": "headphones",
       "code": 59397,
       "src": "iconic"
+    },
+    {
+      "uid": "a58032f4aafd0eec54803075f5b320d4",
+      "css": "email",
+      "code": 59407,
+      "src": "zocial"
+    },
+    {
+      "uid": "d6096cb47cc4448ac68b6a2e2c52a81d",
+      "css": "itunes",
+      "code": 59403,
+      "src": "zocial"
     },
     {
       "uid": "e7ab5637425cce7dd2176302ddaf1c08",
@@ -49,6 +79,18 @@
       "uid": "fc006ff27e50163bdec3a7588226171b",
       "css": "play-circled",
       "code": 59394,
+      "src": "elusive"
+    },
+    {
+      "uid": "4f805cf4ac0dd68ab439dc36859b85d3",
+      "css": "pause",
+      "code": 59402,
+      "src": "elusive"
+    },
+    {
+      "uid": "8710d1e404dcb3a55b3ab97f797355b5",
+      "css": "pause-circled",
+      "code": 59401,
       "src": "elusive"
     }
   ]

@@ -1,0 +1,14 @@
+<div class="share__icons">
+	<%= link_icon :icon => 'twitter',
+								:class => 'twitter-popup',
+								:url => twitter_share_url(:url => current_page_url,
+																					:text => "Check out these songs I found on Trackblast") %>
+	<%= link_icon :icon => 'facebook-squared',
+								:class => 'facebook-popup' %>
+
+	<%= link_icon :icon => 'email',
+								:url => " ",
+							  :link_type => :mail_to_block,
+							  :subject => "Trackblast",
+							  :body => current_page_url %>
+</div>

@@ -1,0 +1,22 @@
+<li>
+	<a href="#" class="js-play-preview track__image" target="_blank">
+		<audio src="<%= track.preview_url %>" volume="0"></audio>
+		<i class="icon-play-circled track__play-icon"></i>
+		<%= image_tag track.artwork_url, :width => "100", :height => "100" %>
+	</a>
+
+	<%= link_icon :url => track.view_url,
+								:icon => 'itunes',
+								:class => "track__link",
+								:target => "_blank" %>
+
+	<div class="track__body">
+		<span class="track__name"><%= track.name %></span>
+		<div class="l-ellip">
+			<%# This div is to make the element on its own
+			 line without the link itself being a block%>
+			<%= link_to track.artist_name, track.artist_view_url, :class => "track__artist" %>
+		</div>
+		<span class="track__album"><%= track.album_name %></span>
+	</div>
+</li>

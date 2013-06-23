@@ -55,3 +55,5 @@ gem 'modular-scale'
 
 #For making server stfu about could not determine content-length
 gem 'thin'
+
+gem 'addressable'
