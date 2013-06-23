@@ -154,3 +154,13 @@ var defer = function(val, delay) {
 
 	return result;
 };
+
+$.fn.cssAnimate = function(animation, duration){
+	duration == duration || 1000;
+	var el = $(this);
+
+	el.addClass("animated").addClass(animation);
+	setTimeout(function(){
+		el.removeClass(animation);
+	}, duration);
+};
