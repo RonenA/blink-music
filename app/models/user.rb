@@ -1,16 +1,21 @@
 class User < ActiveRecord::Base
-  attr_accessible :token
-  validates_presence_of :token
+  validates_presence_of :token, :share_token
 
   before_validation :generate_token, :only => :create
+  before_validation :generate_share_token, :only => :create
 
   has_many :votes
 
   def generate_token
     begin
-      new_token = SecureRandom.urlsafe_base64(32)
-    end until User.find_by_token(new_token).blank?
-    self.token = new_token
+      self.token = SecureRandom.urlsafe_base64(32)
+    end until User.find_by_token(self.token).nil?
+  end
+
+  def generate_share_token
+    begin
+      self.share_token = SecureRandom.urlsafe_base64(4).gsub(/-|_/, '')
+    end until User.find_by_share_token(self.share_token).nil?
   end
 
   # Returns a list of newly added tracks

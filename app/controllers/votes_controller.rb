@@ -2,6 +2,8 @@ class VotesController < ApplicationController
 	before_filter :ensure_token
 
 	def judge
+    @user = current_user
+    @tracks = @user.tracks_to_vote
 	end
 
 	#Array of track id's current_user should vote on
@@ -23,7 +25,12 @@ class VotesController < ApplicationController
 	end
 
   def results
-    @tracks = current_user.liked_tracks
+    @user = User.find_by_share_token(params[:share_token])
+    if @user
+      @tracks = @user.liked_tracks
+    else
+      redirect_to '/'
+    end
   end
 
 	#TODO: Remove

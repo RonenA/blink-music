@@ -5,6 +5,8 @@ var snippetLength = 2000;
 var readySetGo = ["Set...", "Go!"];
 
 $(function(){
+	var sounds = getSounds(tracksInfo);
+
 	$('.js-start-button').click(function(){
 		$('#page-home').hide();
 		$('#page-get-ready').show();
@@ -14,7 +16,7 @@ $(function(){
 				$('.js-ready-heading').text( readySetGo.shift() );
 			} else {
 				$('.js-ready-heading').text('');
-				startBlast();
+				startBlast(sounds);
 				$('.instructions').addClass('is-mini');
 				clearInterval(swapHeading);
 			}
@@ -23,90 +25,70 @@ $(function(){
 	});
 });
 
-var startBlast = function(){
-	getCandidates().done(function(tracksInfo){
-		var sounds = getSounds(tracksInfo);
+var startBlast = function(sounds){
+	var liked;
 
-		var liked;
+	var loop;
+	var i = 0;
+	loop = function(){
+		if(i == sounds.length) {
+			window.location.pathname = '/'+shareToken;
+		}
 
-		var loop;
-		loop = function(){
-			var sound = sounds.shift();
-			var trackInfo = tracksInfo.shift();
+		var sound = sounds[i];
+		var trackInfo = tracksInfo[i];
 
-			sound.done(function(sound){
-				playSound(sound);
-				startLoadingBar();
+		sound.done(function(sound) {
+			if(!isReady(sound)) {
+				++i; loop();
+				return;
+			}
 
-				liked = defer(false, snippetLength);
-				liked.done(function(liked){
-					stopSound(sound);
-					submitVote(liked, trackInfo.id);
-					if (sounds.length > 0){
-						loop();
-					} else {
-						window.location.pathname = '/results'
-					}
-				});
+			playSound(sound);
+			startLoadingBar();
+
+			liked = defer(false, snippetLength);
+			liked.done(function(liked){
+				stopSound(sound);
+				submitVote(liked, trackInfo.id);
+
+				++i; loop();
 			});
-		};
-		loop();
-
-		$(document).keypress(function(e){
-			if (e.which == 97){
-				animateKeyPress($('.js-like-key'));
-				animateFeedbackIcon('<i class="icon-heart"></i>');
-				liked.resolve(true);
-			}
-			else if(e.which == 108){
-				animateKeyPress($('.js-dislike-key'));
-				animateFeedbackIcon('<i class="icon-cancel-circled"></i>');
-				liked.resolve(false);
-			}
 		});
-	});
-};
+	};
+	loop();
 
-// Get array of iTunes track ids
-//  getCandidates :: Deferred [Integer]
-var getCandidates = function(){
-	return $.ajax({
-		url: '/votes/candidates',
-		type: 'GET',
-		dataType: 'json'
-	}).fail(function (jqXHR, textStatus, errorThrown){
-		//TODO: Handle errors better
-		alert("Error: " + textStatus);
-	});
-};
-
-// Get track attributes from iTunes
-//  getTrackData :: Integer -> Deferred Map
-var getTrackData = function(trackId){
-	return $.ajax({
-		url: 'http://itunes.apple.com/lookup?id='+trackId,
-		type: 'GET',
-		dataType: 'jsonp'
-	}).fail(function (jqXHR, textStatus, errorThrown) {
-		//TODO: Handle errors better
-		alert("Error: " + textStatus);
-	});
-};
-
-// Get deferred stream from iTunes
-//  getSound :: Integer -> Deferred $(<audio>)
-var getSound = function(trackId){
-	return getTrackData(trackId).pipe(function(trackData){
-		var source = trackData.results[0].previewUrl;
-		return $('<audio>', {src: source, preload: 'auto'});
+	$(document).keypress(function(e){
+		if (e.which == 97){
+			animateKeyPress($('.js-like-key'));
+			animateFeedbackIcon('<i class="icon-heart"></i>');
+			liked.resolve(true);
+		}
+		else if(e.which == 108){
+			animateKeyPress($('.js-dislike-key'));
+			animateFeedbackIcon('<i class="icon-cancel-circled"></i>');
+			liked.resolve(false);
+		}
 	});
 };
 
 //  getSounds :: [Map] -> [Deferred $(<audio>)]
 var getSounds = function(tracksInfo){
-	return _.map(tracksInfo, function(trackInfo){
-		return getSound(trackInfo.id_from_vendor);
+	var sounds = _.map(_.range(tracksInfo.length), function(){
+		return $.Deferred();
 	});
+	var i = 0;
+	var timer = setInterval(function() {
+		if(i == tracksInfo.length) {
+			clearInterval(timer);
+			return;
+		}
+		sounds[i].resolve($('<audio>',
+				{src: tracksInfo[i].preview_url, preload: 'auto'}));
+		++i;
+	}, snippetLength/4);
+
+	return _.clone(sounds);
 };
 
 // Ajax put vote
@@ -123,6 +105,11 @@ var submitVote = function(liked, trackId){
 	});
 };
 
+//  isReady :: $(<audio>) -> Bool
+var isReady = function(sound) {
+	return sound[0].readyState >= 3;
+};
+
 //  playSound :: $(<audio>) -> ()
 var playSound = function(sound){
 	$('body').append(sound);
@@ -132,6 +119,7 @@ var playSound = function(sound){
 //  stopSound :: $(<audio>) -> ()
 var stopSound = function(sound){
 	sound[0].pause();
+	sound.attr('src', '');
 	sound.remove();
 };
 
@@ -165,4 +153,14 @@ var defer = function(val, delay) {
 	}, delay);
 
 	return result;
+};
+
+$.fn.cssAnimate = function(animation, duration){
+	duration == duration || 1000;
+	var el = $(this);
+
+	el.addClass("animated").addClass(animation);
+	setTimeout(function(){
+		el.removeClass(animation);
+	}, duration);
 };
