@@ -47,3 +47,7 @@ i[class^="icon-"]:before, i[class*=" icon-"]:before {
 .icon-headphones:before { content: '\e805'; } /* '' */
 .icon-thumbs-up:before { content: '\e800'; } /* '' */
 .icon-thumbs-down:before { content: '\e801'; } /* '' */
+
+.red-icon{
+  &:before { color: red }
+}
