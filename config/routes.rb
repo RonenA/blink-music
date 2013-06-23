@@ -6,5 +6,5 @@ BlinkMusic::Application.routes.draw do
  	#TODO: remove
   get '/logout' => "votes#kill_cookie"
 
-  get '/:share_token' => 'votes#results'
+  get '/:share_token' => 'votes#results', :as => :results
 end

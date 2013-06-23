@@ -13,6 +13,7 @@
 $helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $avenir: Avenir;
 $navy: #1B4F81;
+$light-blue: #00ADFF;
 
 body{
 	background-color: $navy;
@@ -42,9 +43,18 @@ a{
 }
 
 h1{
-	font-size: ms(5, 12px);
+	font-size: ms(4);
 	font-weight: bold;
-	margin-bottom: 22px;
+	//margin-bottom: ms(1);
+}
+
+h2{
+	font-size: ms(2);
+	margin-bottom: ms(1);
+}
+
+.home-lead{
+	width: 585px;
 }
 
 .container{

@@ -5,8 +5,15 @@
 
 	&.is-mini{
 		font-size: ms(1);
-		.key{ width: 54px }
 		opacity: 0.5;
+		.key{ width: 54px }
+	}
+}
+
+@media screen and (max-height:552px) {
+	.instructions.l-bottom {
+		position: static;
+		margin-top: 20px;
 	}
 }
 

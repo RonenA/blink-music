@@ -14,8 +14,9 @@
 
 	<div id="page-home">
 		<h1>Trackblast</h1>
+		<h2 class="home-lead">Discover new music by voting on two-second snippets.</h2>
 
-		<button class="btn--large js-start-button">
+		<button class="btn--large btn--blue js-start-button">
 			Let's Play <i class="icon-play"></i>
 		</button>
 
@@ -24,6 +25,13 @@
 	<div id="page-get-ready" style="display:none">
 		<h1 class="js-ready-heading">Ready?</h1>
 	</div>
+
+	<nav class="l-top-right home-nav">
+		<ul>
+			<li><%= link_to "My Likes", results_path(current_user.share_token), :class => "icon-heart" %></li>
+			<li><%= mail_to "hello@trackblast.com", "Contact Us", :class => "icon-email" %></li>
+		</ul>
+	</nav>
 
 	<div class="instructions l-bottom">
 		<div class="box key js-like-key">A</div>
