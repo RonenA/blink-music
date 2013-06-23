@@ -86,7 +86,7 @@ var getSounds = function(tracksInfo){
 		sounds[i].resolve($('<audio>',
 				{src: tracksInfo[i].preview_url, preload: 'auto'}));
 		++i;
-	}, snippetLength/4);
+	}, snippetLength/2);
 
 	return _.clone(sounds);
 };

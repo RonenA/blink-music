@@ -66,15 +66,14 @@ $track-image-size: 100px;
 }
 
 .track__link{
+	$link-icon-size: 20px;
 	float: right;
 
-	font-size: 20px;
+	font-size: $link-icon-size;
 	color: white;
-	margin: 0 15px;
+	margin: ($track-image-size/2 - $link-icon-size/2) 15px 0 15px;
 	opacity: 0.5;
 
-	line-height: $track-image-size - 4px; //not sure why but these
-																				//4px are needed
 	&:hover{
 		text-decoration: none;
 		opacity: 1;
