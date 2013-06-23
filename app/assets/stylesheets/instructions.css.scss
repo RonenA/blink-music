@@ -1,10 +1,10 @@
 .instructions{
 	margin-bottom: 40px;
-	font-size: ms(2);
+	font-size: ms(1);
 	@include transition(font-size 0.5s);
 
 	&.is-mini{
-		font-size: ms(1);
+		font-size: ms(0.5);
 		opacity: 0.5;
 		.key{ width: 54px }
 	}
@@ -18,7 +18,7 @@
 }
 
 .key{
-	width: 85px;
+	width: 60px;
 	@include box-shadow(0 3px 0px 3px #FFF);
 	border: none;
 	border-top: 2px solid #FFF;

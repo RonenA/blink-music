@@ -11,13 +11,12 @@
 @import "modular-scale";
 
 $helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
-$avenir: Avenir;
 $navy: #1B4F81;
 $light-blue: #00ADFF;
 
 body{
 	background-color: $navy;
-	font-family: $avenir;
+	font-family: 'Open Sans', sans-serif;
 	color: white;
 	-webkit-font-smoothing: antialiased;
 }
@@ -25,6 +24,7 @@ body{
 button{
 	border: 0;
 	-webkit-appearance: none;
+	font-family: inherit;
 }
 
 div{
@@ -50,11 +50,7 @@ h1{
 
 h2{
 	font-size: ms(2);
-	margin-bottom: ms(1);
-}
-
-.home-lead{
-	width: 585px;
+	margin-bottom: ms(2);
 }
 
 .container{

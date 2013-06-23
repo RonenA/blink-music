@@ -2,25 +2,35 @@
 //TODO: Remove
 
 var snippetLength = 2000;
-var readySetGo = ["Set...", "Go!"];
 
 $(function(){
 	var sounds = getSounds(tracksInfo);
 
 	$('.js-start-button').click(function(){
-		$('#page-home').hide();
-		$('#page-get-ready').show();
+		$('#page-home').fadeOut(function(){
+			$('#page-get-ready').show();
 
-		var swapHeading = setInterval(function(){
-			if (readySetGo.length > 0){
-				$('.js-ready-heading').text( readySetGo.shift() );
-			} else {
-				$('.js-ready-heading').text('');
-				startBlast(sounds);
-				$('.instructions').addClass('is-mini');
-				clearInterval(swapHeading);
-			}
-		}, 1500);
+			var heading = $('.js-ready-heading');
+
+			heading.cssAnimate('flashInOut', 1000, function(){
+
+				window.setTimeout(function(){
+					heading.text( "Set" ).cssAnimate('flashInOut', 1000, function(){
+
+						window.setTimeout(function(){
+							heading.text( "Go" ).cssAnimate('flashInOut', 1000, function(){
+									heading.text('');
+							});
+							startBlast(sounds);
+							$('.instructions').addClass('is-mini');
+						});
+
+					});
+				});
+
+			});
+
+		});
 
 	});
 });
@@ -155,12 +165,13 @@ var defer = function(val, delay) {
 	return result;
 };
 
-$.fn.cssAnimate = function(animation, duration){
-	duration == duration || 1000;
+$.fn.cssAnimate = function(animation, duration, callback){
+	duration = duration || 1000;
 	var el = $(this);
 
 	el.addClass("animated").addClass(animation);
 	setTimeout(function(){
 		el.removeClass(animation);
+		callback();
 	}, duration);
 };

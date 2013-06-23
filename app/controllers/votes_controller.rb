@@ -2,8 +2,7 @@ class VotesController < ApplicationController
 	before_filter :ensure_token
 
 	def blast
-    @user = current_user
-    @tracks = @user.tracks_to_vote
+    @tracks = current_user.tracks_to_vote
 	end
 
 	#Array of track id's current_user should vote on

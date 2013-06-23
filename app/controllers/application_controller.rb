@@ -3,8 +3,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-    return nil if session[:token].nil?
-  	@current_user ||= User.find_by_token(session[:token])
+    @current_user ||= User.find_by_token(session[:token])
   end
 
   def ensure_token

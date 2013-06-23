@@ -178,3 +178,33 @@
   -o-animation-name: fadeOutDown;
   animation-name: fadeOutDown;
 }
+
+
+
+@-webkit-keyframes flashInOut {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@-moz-keyframes flashInOut {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@-o-keyframes flashInOut {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes flashInOut {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.flashInOut{
+  @include animation-name(flashInOut);
+}
