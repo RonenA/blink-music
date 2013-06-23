@@ -27,6 +27,8 @@ $(function(){
 		return false;
 	});
 
+	// Playing previews
+
 	var previewPlaying = null;
 	var lastPreviewPlayed = null;
 
@@ -58,5 +60,34 @@ $(function(){
 	var stopPreview = function(tag) {
 		tag.find('.icon-pause-circled').toggleClass('icon-play-circled icon-pause-circled');
 		tag.find('audio')[0].pause();
+	};
+
+	// Infinite scrolling
+
+	var page = 1;
+	var loading = false;
+
+	$(window).scroll(function() {
+		if(loading) {
+			return;
+		}
+
+		if(nearBottomOfPage()) {
+			loading = true;
+			++page;
+
+			$.ajax({
+				url: window.location.pathname+'?page='+page,
+				type: 'GET',
+				dataType: 'html',
+			}).done(function(nextPage) {
+				$('.track-list').append(nextPage);
+				loading = false;
+			});
+		}
+	});
+
+	var nearBottomOfPage = function() {
+		return $(window).scrollTop() > $(document).height() - $(window).height() - 200;
 	};
 });

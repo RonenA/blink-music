@@ -27,7 +27,11 @@ class VotesController < ApplicationController
   def results
     @user = User.find_by_share_token(params[:share_token])
     if @user
-      @tracks = @user.liked_tracks
+      @tracks = Kaminari.paginate_array(@user.liked_tracks)
+                        .page(params[:page]).per(20)
+      if params[:page]
+        render 'more_results', :layout => false
+      end
     else
       redirect_to '/'
     end
