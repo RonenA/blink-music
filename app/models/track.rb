@@ -16,10 +16,11 @@ class Track < ActiveRecord::Base
     end
   end
 
-  def self.sample(n)
-    maximum = count
-    (1..n).map do
-      id = rand(maximum) + 1
+  def self.sample(n=nil)
+    if n != nil
+      (1..n).map { sample }
+    else
+      id = rand(maximum(:id)) + 1
       first(:conditions => ["id >= ?", id])
     end
   end

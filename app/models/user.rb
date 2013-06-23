@@ -18,28 +18,26 @@ class User < ActiveRecord::Base
     end until User.find_by_share_token(self.share_token).nil?
   end
 
-  # Returns a list of newly added tracks
-  def get_new_tracks
-    transaction do
-      tracks = Track.sample(50)
-
-      tracks.select do |t|
-        self.votes.create { |v| v.track = t }
-      end
-    end
-  end
-
   def tracks_voted(liked)
     self.votes.where(:liked => liked).includes(:track)
               .map(&:track)
   end
 
   def tracks_to_vote
-    tracks_to_vote = tracks_voted(nil)
-    if tracks_to_vote.length < 10
-      tracks_to_vote += get_new_tracks
+    tracks = tracks_voted(nil)
+
+    transaction do
+      while tracks.length < 50
+        track = Track.sample
+        vote = self.votes.new { |v| v.track = track }
+
+        if vote.save
+          tracks << track
+        end
+      end
     end
-    tracks_to_vote
+
+    tracks
   end
 
   def liked_tracks
