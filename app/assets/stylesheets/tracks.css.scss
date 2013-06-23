@@ -3,9 +3,13 @@ $results-border: 1px solid rgba(white, 0.12);
 	@extend .main-content;
 	border-right: $results-border;
 
-	li{
-		@include clearfix;
+	& > li{
+		@include legacy-pie-clearfix;
+		position: relative;
 		border-bottom: $results-border;
+		&:hover{
+			.track__controls { display: block }
+		}
 	}
 }
 
@@ -30,7 +34,7 @@ $track-image-size: 100px;
 	color: white;
 	background-color: black;
 	width: $play_i_size;
-	height: $play_i_size;
+	height: $play_i_size+1;
 	padding: 2px;
 
 	@include opacity(0.5);
@@ -64,24 +68,29 @@ $track-image-size: 100px;
 	line-height: 1.2em;
 }
 
-.track__link{
+.track__controls{
+	display: none;
+
 	$link-icon-size: 20px;
 	float: right;
+	width: $link-icon-size;
+	text-align: center;
+	margin: 28px 15px 0 15px;
 
-	font-size: $link-icon-size;
-	color: white;
-	margin: ($track-image-size/2 - $link-icon-size/2) 15px 0 15px;
-	opacity: 0.5;
+	.tooltip.left{ margin-left: -15px; }
 
-	&:hover{
-		text-decoration: none;
-		opacity: 1;
+	a{
+		display: block;
+		margin-bottom: 3px;
+
+		color: white;
+		opacity: 0.5;
+		font-size: $link-icon-size;
+		&.track__delete{ font-size: $link-icon-size * 1.35 }
+
+		&:hover{
+			text-decoration: none;
+			opacity: 1;
+		}
 	}
-}
-
-
-.track__buy-label{
-	display: none;
-	font-size: 15px;
-	font-weight: normal;
 }

@@ -5,11 +5,24 @@
 		<%= image_tag track.artwork_url, :width => "100", :height => "100" %>
 	</a>
 
-	<%= link_icon :url => track.view_url,
-								:icon => 'itunes',
-								:class => "track__link js-tooltip",
-								:target => :blank,
-								:title => "Buy on iTunes" %>
+	<div class="track__controls">
+		<ul>
+			<li>
+				<%= link_icon :url => track.view_url,
+											:icon => 'itunes',
+											:class => "track__link js-tooltip",
+											:target => :blank,
+											:title => "Buy on iTunes",
+											"data-placement" => "left" %>
+			</li>
+			<li>
+				<a href="#"
+					 class="js-delete-track js-tooltip track__delete"
+					 title="Remove track"
+					 data-placement="left">&times;</a>
+			</li>
+		</ul>
+	</div>
 
 	<div class="track__body">
 		<span class="track__name"><%= track.name %></span>

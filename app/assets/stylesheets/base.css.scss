@@ -65,3 +65,7 @@ h2{
 .media__body{
 	overflow: hidden;
 }
+
+.tooltip.in{
+	@include opacity(1);
+}

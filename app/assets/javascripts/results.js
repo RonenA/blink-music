@@ -1,5 +1,5 @@
 $(function(){
-  $('.track-list').tooltip({animation: false, selector: '.js-tooltip'});
+  $('.track-list').tooltip({animation: false, selector: '.js-tooltip' });
 
 	$('.twitter-popup').click(function(event) {
 		var width  = 550,
