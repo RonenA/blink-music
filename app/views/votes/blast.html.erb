@@ -12,8 +12,12 @@
 <div class="container">
 	<%= render :partial => "home" %>
 
+	<%# TODO: Maybe rename this from get-ready to something
+						else. It's kind of the main game. %>
 	<div id="page-get-ready" style="display:none">
 		<h1 class="js-ready-heading ready-heading animated">Ready?</h1>
+		<%= link_to "Skip to likes", results_url(current_user.share_token),
+				:class => "skip-button icon-heart"%>
 	</div>
 
 	<div class="instructions l-bottom">

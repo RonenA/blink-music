@@ -1,12 +1,11 @@
-$results-border: 1px solid rgba(white, 0.12);
+$track-border: 1px solid rgba(white, 0.12);
 .track-list{
 	@extend .main-content;
-	border-right: $results-border;
 
 	& > li{
 		@include legacy-pie-clearfix;
 		position: relative;
-		border-bottom: $results-border;
+		border-bottom: $track-border;
 		&:hover{
 			.track__controls { display: block }
 		}
