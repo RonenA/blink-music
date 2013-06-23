@@ -6,33 +6,42 @@ var snippetLength = 2000;
 $(function(){
 	var sounds = getSounds(tracksInfo);
 
-	$('.js-start-button').click(function(){
-		$('#page-home').fadeOut(function(){
-			$('#page-get-ready').show();
+	if(getParameterByName('play_again') != 'true') {
+		$('.js-start-button').click(function(){
+			$('#page-home').fadeOut(function(){
+				$('#page-get-ready').show();
 
-			var heading = $('.js-ready-heading');
+				var heading = $('.js-ready-heading');
 
-			heading.cssAnimate('flashInOut', 1000, function(){
+				heading.cssAnimate('flashInOut', 1000, function(){
 
-				window.setTimeout(function(){
-					heading.text( "Set" ).cssAnimate('flashInOut', 1000, function(){
+					window.setTimeout(function(){
+						heading.text( "Set" ).cssAnimate('flashInOut', 1000, function(){
 
-						window.setTimeout(function(){
-							heading.text( "Go" ).cssAnimate('flashInOut', 1000, function(){
-									heading.text('');
+							window.setTimeout(function(){
+								heading.text( "Go" ).cssAnimate('flashInOut', 1000, function(){
+										heading.text('');
+								});
+								$('.instructions').addClass('is-mini');
+								startBlast(sounds);
 							});
-							startBlast(sounds);
-							$('.instructions').addClass('is-mini');
-						});
 
+						});
 					});
+
 				});
 
 			});
 
 		});
+	} else {
+		$('#page-home').hide();
+		$('.instructions').addClass('is-mini');
 
-	});
+		window.setTimeout(function(){
+			startBlast(sounds);
+		}, snippetLength);
+	}
 });
 
 var startBlast = function(sounds){
@@ -42,7 +51,7 @@ var startBlast = function(sounds){
 	var i = 0;
 	loop = function(){
 		if(i == sounds.length) {
-			window.location.pathname = '/'+shareToken;
+			window.location = window.location.origin+'/'+shareToken;
 		}
 
 		var sound = sounds[i];
@@ -163,6 +172,14 @@ var defer = function(val, delay) {
 	}, delay);
 
 	return result;
+};
+
+//  getParameterByName :: String -> String
+var getParameterByName = function(name) {
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 };
 
 $.fn.cssAnimate = function(animation, duration, callback){

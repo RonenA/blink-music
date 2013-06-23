@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   def generate_share_token
     begin
       self.share_token = SecureRandom.urlsafe_base64(4).gsub(/-|_/, '')
-    end until User.find_by_share_token(self.share_token).nil?
+    end until share_token != '' && User.find_by_share_token(share_token).nil?
   end
 
   def votes_as(liked)
