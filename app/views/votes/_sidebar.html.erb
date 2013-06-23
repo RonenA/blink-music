@@ -6,7 +6,7 @@
 	<% if current_user == @user %>
 
 		<h2 class="icon-heart red-icon">Your likes</h2>
-		<%= link_to "#", :class => "btn btn--blue" do %>
+		<%= link_to root_url(:play_again => true), :class => "btn btn--blue" do %>
 			Play again  <i class="icon-play"></i>
 		<% end %>
 
@@ -18,7 +18,7 @@
 	<% else %>
 
 		<h2>Discover new music by voting on two-second snippets.</h2>
-		<%= link_to "#", :class => "btn btn--blue" do %>
+		<%= link_to root_url, :class => "btn btn--blue" do %>
 			Play Now  <i class="icon-play"></i>
 		<% end %>
 
