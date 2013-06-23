@@ -1,7 +1,7 @@
 <% content_for :head do %>
 	<script>
 		var tracksInfo = <%=j @tracks.to_json.html_safe %>;
-		var shareToken = <%=j @user.share_token.to_json.html_safe %>;
+		var shareToken = <%=j current_user.share_token.to_json.html_safe %>;
 	</script>
 
 	<%= javascript_include_tag "blast" %>
@@ -16,6 +16,15 @@
 		<h1>Trackblast</h1>
 		<h2 class="home-lead">Discover new music by voting on two-second snippets.</h2>
 
+		<nav class="l-top-right home-nav">
+			<ul>
+				<% if current_user.liked_tracks.any? %>
+					<li><%= link_to "My Likes", results_path(current_user.share_token), :class => "icon-heart" %></li>
+				<% end %>
+				<li><%= mail_to "hello@trackblast.com", "Contact Us", :class => "icon-email" %></li>
+			</ul>
+		</nav>
+
 		<button class="btn--large btn--blue js-start-button">
 			Let's Play <i class="icon-play"></i>
 		</button>
@@ -23,15 +32,8 @@
 	</div>
 
 	<div id="page-get-ready" style="display:none">
-		<h1 class="js-ready-heading">Ready?</h1>
+		<h1 class="js-ready-heading ready-heading animated">Ready?</h1>
 	</div>
-
-	<nav class="l-top-right home-nav">
-		<ul>
-			<li><%= link_to "My Likes", results_path(current_user.share_token), :class => "icon-heart" %></li>
-			<li><%= mail_to "hello@trackblast.com", "Contact Us", :class => "icon-email" %></li>
-		</ul>
-	</nav>
 
 	<div class="instructions l-bottom">
 		<div class="box key js-like-key">A</div>

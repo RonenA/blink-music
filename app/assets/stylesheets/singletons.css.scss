@@ -9,3 +9,7 @@ $feedback-icon-size: 140px;
 	font-size: 100px;
 	@include animation-duration(0.3s);
 }
+
+.ready-heading{
+	opacity: 0;
+}

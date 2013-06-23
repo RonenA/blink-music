@@ -1,6 +1,6 @@
 .instructions{
 	margin-bottom: 40px;
-	font-size: ms(2);
+	font-size: ms(1.5);
 	@include transition(font-size 0.5s);
 
 	&.is-mini{
@@ -18,7 +18,7 @@
 }
 
 .key{
-	width: 85px;
+	width: 67px;
 	@include box-shadow(0 3px 0px 3px #FFF);
 	border: none;
 	border-top: 2px solid #FFF;

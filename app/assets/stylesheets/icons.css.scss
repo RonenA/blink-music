@@ -27,6 +27,7 @@
   margin-left: .2em;
 }
 
+//Added by Ronen. Allows you to use <i> tags for standalone icons.
 i[class^="icon-"]:before, i[class*=" icon-"]:before {
   margin: 0;
 }
