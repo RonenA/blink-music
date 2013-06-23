@@ -6,4 +6,6 @@ class Vote < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :track
+
+  paginates_per 20
 end

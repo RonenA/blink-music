@@ -18,7 +18,7 @@
 
 		<nav class="l-bottom-right home-nav">
 			<ul>
-				<% if current_user.liked_tracks.any? %>
+				<% if current_user.like_votes.exists? %>
 					<li><%= link_to "My Likes", results_path(current_user.share_token), :class => "icon-heart" %></li>
 				<% end %>
 				<li><%= mail_to "hello@trackblast.com", "Contact Us", :class => "icon-email" %></li>

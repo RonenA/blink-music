@@ -18,13 +18,12 @@ class User < ActiveRecord::Base
     end until User.find_by_share_token(self.share_token).nil?
   end
 
-  def tracks_voted(liked)
+  def votes_as(liked)
     self.votes.where(:liked => liked).includes(:track)
-              .map(&:track)
   end
 
   def tracks_to_vote
-    tracks = tracks_voted(nil)
+    tracks = votes_as(nil).map(&:track)
 
     transaction do
       while tracks.length < 50
@@ -40,7 +39,7 @@ class User < ActiveRecord::Base
     tracks
   end
 
-  def liked_tracks
-    tracks_voted(true)
+  def like_votes
+    votes_as(true).order('updated_at DESC')
   end
 end
