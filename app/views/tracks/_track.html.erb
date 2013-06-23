@@ -1,4 +1,4 @@
-<li>
+<li data-track-id="<%= track.id %>">
 	<a href="#" class="js-play-preview track__image" target="_blank">
 		<audio src="<%= track.preview_url %>" volume="0"></audio>
 		<i class="icon-play-circled track__play-icon"></i>
@@ -17,9 +17,9 @@
 			</li>
 			<li>
 				<a href="#"
-					 class="js-delete-track js-tooltip track__delete"
-					 title="Remove track"
-					 data-placement="left">&times;</a>
+				   class="js-delete-track js-tooltip track__delete"
+				   title="Remove track"
+				   data-placement="left">&times;</a>
 			</li>
 		</ul>
 	</div>

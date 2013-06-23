@@ -3,8 +3,10 @@
 		var tracksInfo = <%=j @tracks.to_json.html_safe %>;
 		var shareToken = <%=j current_user.share_token.to_json.html_safe %>;
 	</script>
+<% end %>
 
-	<%= javascript_include_tag "blast" %>
+<% content_for :js_page do %>
+	blast
 <% end %>
 
 <div class="loading-bar-bg">

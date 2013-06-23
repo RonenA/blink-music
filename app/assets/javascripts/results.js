@@ -1,93 +1,116 @@
-$(function(){
-  $('.track-list').tooltip({animation: false, selector: '.js-tooltip' });
+var results = (function(){
 
-	$('.twitter-popup').click(function(event) {
-		var width  = 550,
-			height = 400,
-			left   = ($(window).width()  - width)  / 2,
-			top    = ($(window).height() - height) / 2,
-			url    = this.href,
-			opts   = 'status=1' +
-			         ',width='  + width  +
-			         ',height=' + height +
-			         ',top='    + top    +
-			         ',left='   + left;
+	var go = function() {
+		$('.track-list').tooltip({animation: false, selector: '.js-tooltip' });
 
-		window.open(url, 'twitter', opts);
+		$('.twitter-popup').click(function(event) {
+			var width  = 550,
+				height = 400,
+				left   = ($(window).width()  - width)  / 2,
+				top    = ($(window).height() - height) / 2,
+				url    = this.href,
+				opts   = 'status=1' +
+						 ',width='  + width  +
+						 ',height=' + height +
+						 ',top='    + top    +
+						 ',left='   + left;
 
-		return false;
-	});
+			window.open(url, 'twitter', opts);
 
-	$('.facebook-popup').click(function(){
-		window.open(
-			'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
-			'fb-share-dialog',
-			'width=626,height=436');
+			return false;
+		});
 
-		return false;
-	});
+		$('.facebook-popup').click(function(){
+			window.open(
+				'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+				'fb-share-dialog',
+				'width=626,height=436');
 
-	// Playing previews
+			return false;
+		});
 
-	var previewPlaying = null;
-	var lastPreviewPlayed = null;
+		// Playing previews
 
-	$('.track-list').on('click', '.js-play-preview', function(e){
-		e.preventDefault();
+		var previewPlaying = null;
+		var lastPreviewPlayed = null;
 
-		if(!$(this).is(previewPlaying)) {
-			if(lastPreviewPlayed != null && !$(this).is(lastPreviewPlayed)) {
-				stopPreview(lastPreviewPlayed);
-				lastPreviewPlayed.find('audio')[0].currentTime = 0;
+		$('.track-list').on('click', '.js-play-preview', function(e){
+			e.preventDefault();
+
+			if(!$(this).is(previewPlaying)) {
+				if(lastPreviewPlayed != null && !$(this).is(lastPreviewPlayed)) {
+					stopPreview(lastPreviewPlayed);
+					lastPreviewPlayed.find('audio')[0].currentTime = 0;
+				}
+				playPreview($(this));
+				previewPlaying = lastPreviewPlayed = $(this);
+			} else {
+				stopPreview($(this));
+				previewPlaying = null;
 			}
-			playPreview($(this));
-			previewPlaying = lastPreviewPlayed = $(this);
-		} else {
+		});
+
+		$('.track-list').on('ended', '.js-play-preview', function() {
 			stopPreview($(this));
-			previewPlaying = null;
-		}
-	});
+		});
 
-	$('.track-list').on('ended', '.js-play-preview', function() {
-		stopPreview($(this));
-	});
+		var playPreview = function(tag) {
+			tag.find('.icon-play-circled')
+			   .toggleClass('icon-play-circled icon-pause-circled');
+			tag.find('audio')[0].play();
+		};
 
-	var playPreview = function(tag) {
-		tag.find('.icon-play-circled').toggleClass('icon-play-circled icon-pause-circled');
-		tag.find('audio')[0].play();
-	};
+		var stopPreview = function(tag) {
+			tag.find('.icon-pause-circled')
+			   .toggleClass('icon-play-circled icon-pause-circled');
+			tag.find('audio')[0].pause();
+		};
 
-	var stopPreview = function(tag) {
-		tag.find('.icon-pause-circled').toggleClass('icon-play-circled icon-pause-circled');
-		tag.find('audio')[0].pause();
-	};
+		// Deleting tracks
 
-	// Infinite scrolling
+		$('.track-list').on('click', '.js-delete-track', function(e) {
+			e.preventDefault();
 
-	var page = 1;
-	var loading = false;
-
-	$(window).scroll(function() {
-		if(loading) {
-			return;
-		}
-
-		if(nearBottomOfPage()) {
-			loading = true;
-			++page;
-
-			$.ajax({
-				url: window.location.pathname+'?page='+page,
-				type: 'GET',
-				dataType: 'html',
-			}).done(function(nextPage) {
-				$('.track-list').append(nextPage);
-				loading = false;
+			var track = $(this).closest('.track-list > li');
+			blast.submitVote(false, track.data('track-id')).done(function() {
+				track.remove();
 			});
-		}
-	});
+		});
+
+		// Infinite scrolling
+
+		var page = 1;
+		var loading = false;
+
+		$(window).scroll(function() {
+			if(loading) {
+				return;
+			}
+
+			if(nearBottomOfPage()) {
+				loading = true;
+				++page;
+
+				$.ajax({
+					url: window.location.pathname+'?page='+page,
+					type: 'GET',
+					dataType: 'html',
+				}).done(function(nextPage) {
+					$('.track-list').append(nextPage);
+					loading = false;
+				});
+			}
+		});
+	};
 
 	var nearBottomOfPage = function() {
-		return $(window).scrollTop() > $(document).height() - $(window).height() - 200;
+		var currentLocation = $(window).scrollTop();
+		var loadThreshold = $(document).height() - $(window).height() - 200;
+		return currentLocation > loadThreshold;
 	};
-});
+
+	return {
+		'nearBottomOfPage': nearBottomOfPage,
+		'go'              : go
+	};
+})();

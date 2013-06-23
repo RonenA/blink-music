@@ -14,3 +14,10 @@
 //= require jquery_ujs
 //= require underscore
 //= require bootstrap-tooltip
+//= require_tree
+
+
+$(function() {
+	var jsPage = $('body').data('js-page');
+	window[jsPage].go();
+});
