@@ -1,4 +1,6 @@
 $(function(){
+  $('.js-tooltip').tooltip({animation: false});
+
 	$('.twitter-popup').click(function(event) {
 		var width  = 550,
 			height = 400,

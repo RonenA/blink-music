@@ -1,0 +1,23 @@
+.home-nav{
+	margin: 60px;
+	width: 160px;
+	@include fade-in-hover(0.4, 0.1s);
+
+	li{
+		@extend .btn;
+		@include rounded-corner-list-item(5px);
+
+		display: block;
+		border-width: 1px;
+		margin-bottom: -1px;
+		font-size: ms(0.5);
+		text-align: left;
+	}
+
+	a{
+		font-weight: normal;
+		color: white;
+
+		&:before{ margin-right: 8px }
+	}
+}

@@ -30,5 +30,10 @@ $box-height: 110;
 
 .btn--large{
 	@extend .btn;
-	font-size: ms(3);
+	font-size: ms(2.5);
+}
+
+.btn--blue{
+	background-color: $light-blue;
+	&:hover{ background-color: darken($light-blue, 5%) }
 }
