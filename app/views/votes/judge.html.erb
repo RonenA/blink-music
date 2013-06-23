@@ -1,6 +1,7 @@
 <% content_for :head do %>
 	<script>
 		var tracksInfo = <%=j @tracks.to_json.html_safe %>;
+		var shareToken = <%=j @user.share_token.to_json.html_safe %>;
 	</script>
 
 	<%= javascript_include_tag "vote" %>

@@ -32,7 +32,7 @@ var startBlast = function(sounds){
 	var i = 0;
 	loop = function(){
 		if(i == sounds.length) {
-			window.location.pathname = '/results';
+			window.location.pathname = '/'+shareToken;
 		}
 
 		var sound = sounds[i];

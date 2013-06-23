@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130622052658) do
+ActiveRecord::Schema.define(:version => 20130623002101) do
 
   create_table "tracks", :force => true do |t|
     t.string   "id_from_vendor"
@@ -29,8 +29,9 @@ ActiveRecord::Schema.define(:version => 20130622052658) do
 
   create_table "users", :force => true do |t|
     t.string   "token"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "share_token"
   end
 
   create_table "votes", :force => true do |t|
