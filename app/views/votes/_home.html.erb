@@ -2,13 +2,8 @@
 	<h1 class="home-heading">Trackblast</h1>
 	<h2 class="home-lead"><%= tagline %></h2>
 
-	<nav class="l-bottom-right home-nav">
-		<ul>
-			<% if current_user.like_votes.exists? %>
-				<li><%= link_to "My Likes", results_path(current_user.share_token), :class => "icon-heart" %></li>
-			<% end %>
-			<li><%= mail_to "hello@trackblast.com", "Contact Us", :class => "icon-email" %></li>
-		</ul>
+	<nav class="l-bottom-right">
+		<%= render :partial => "nav" %>
 	</nav>
 
 	<button class="btn--large btn--blue js-start-button">

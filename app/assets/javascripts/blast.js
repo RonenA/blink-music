@@ -48,6 +48,7 @@ var blast = (function(){
 
 	var startBlast = function(sounds){
 		var liked;
+		var hasLiked = !$('.js-skip-button').hasClass('hidden');
 
 		var loop;
 		var i = 0;
@@ -70,6 +71,10 @@ var blast = (function(){
 
 				liked = defer(false, snippetLength);
 				liked.done(function(liked){
+					if(liked && !hasLiked){
+						$('.js-skip-button').addClass('animated fadeInDown').removeClass('hidden');
+						hasLiked = true;
+					}
 					stopSound(sound);
 					submitVote(liked, trackInfo.id);
 

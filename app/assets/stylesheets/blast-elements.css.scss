@@ -15,8 +15,6 @@ $feedback-icon-size: 140px;
 }
 
 .skip-button{
-	display: none;
-
 	@extend .btn;
 	@extend .l-bottom-right;
 	@include fade-in-hover(0.5, 0.2s);

@@ -18,10 +18,30 @@ class User < ActiveRecord::Base
     end until share_token != '' && User.find_by_share_token(share_token).nil?
   end
 
+  # Returns votes where user has voted according to the paramater
+  # LikedStatus -> [Vote]
   def votes_as(liked)
     self.votes.where(:liked => liked).includes(:track)
   end
 
+  # List of all your upvotes, in order of recency
+  # [Vote]
+  def like_votes
+    votes_as(true).order('updated_at DESC')
+  end
+
+  def liked_tracks
+    like_votes.map(&:track)
+  end
+
+  # Have you liked any tracks ever?
+  # Bool
+  def has_liked_tracks?
+    like_votes.exists?
+  end
+
+  # List of tracks you haven't voted on yet
+  # [Track]
   def tracks_to_vote
     tracks = votes_as(nil).map(&:track)
 
@@ -39,7 +59,4 @@ class User < ActiveRecord::Base
     tracks
   end
 
-  def like_votes
-    votes_as(true).order('updated_at DESC')
-  end
 end

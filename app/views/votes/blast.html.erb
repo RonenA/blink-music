@@ -19,7 +19,8 @@
 	<div id="page-get-ready" style="display:none">
 		<h1 class="js-ready-heading ready-heading animated">Ready?</h1>
 		<%= link_to "Skip to likes", results_url(current_user.share_token),
-				:class => "skip-button icon-heart"%>
+									:class => "js-skip-button skip-button icon-heart "+
+									(current_user.has_liked_tracks? ? "" : "hidden") %>
 	</div>
 
 	<div class="instructions l-bottom">

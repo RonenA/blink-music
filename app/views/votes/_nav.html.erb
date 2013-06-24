@@ -1,0 +1,6 @@
+<ul class="nav-list">
+	<% if current_user.has_liked_tracks? %>
+		<li><%= link_to "My Likes", results_path(current_user.share_token), :class => "icon-heart" %></li>
+	<% end %>
+	<li><%= mail_to "hello@trackblast.com", "Contact Us", :class => "icon-email" %></li>
+</ul>

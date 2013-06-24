@@ -1,7 +1,8 @@
 .instructions{
-	margin-bottom: 40px;
 	font-size: ms(1);
 	@include transition(font-size 0.5s);
+
+	.container &{ margin-bottom: 40px; }
 
 	&.is-mini{
 		font-size: ms(0.5);

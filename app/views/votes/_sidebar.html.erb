@@ -3,7 +3,7 @@
 		<h1>Trackblast</h1>
 	<% end %>
 
-	<% if current_user == @user %>
+	<% if @user == current_user %>
 
 		<% content_for :title do %>
 			 My Likes | Trackblast
@@ -25,6 +25,10 @@
 		<%= link_to root_url, :class => "btn btn--blue" do %>
 			Play Now  <i class="icon-play"></i>
 		<% end %>
+
+		<nav class="l-bottom">
+			<%= render :partial => "nav" %>
+		</nav>
 
 	<% end %>
 

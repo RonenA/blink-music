@@ -1,4 +1,6 @@
 //Layout Rules
+.hidden{ display: none }
+
 .l-center-block{
 	display: block;
 	margin: 0 auto;
@@ -33,3 +35,4 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+

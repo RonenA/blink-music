@@ -11,9 +11,7 @@ class VotesController < ApplicationController
 	end
 
 	def submit
-    # TODO: Find it by vote id, though confirming user_id for security.
-		@vote = Vote.where(:user_id => current_user.id,
-                       :track_id => params[:track_id]).first
+		@vote = Vote.find_or_create_by_user_id_and_track_id(current_user.id, params[:track_id])
 
 		if @vote.update_attribute(:liked, params[:liked])
 			render :json => {}
@@ -25,9 +23,14 @@ class VotesController < ApplicationController
 
   def results
     @user = User.find_by_share_token(params[:share_token])
+
     if @user
       @ballots = @user.like_votes.page(params[:page])
       @tracks = @ballots.map(&:track)
+
+      if @user != current_user
+      	@current_user_likes = current_user.liked_tracks
+      end
 
       if params[:page] != nil
         render 'more_results', :layout => false

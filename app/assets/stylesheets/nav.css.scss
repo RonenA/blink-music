@@ -1,22 +1,27 @@
-.home-nav{
-	margin: 40px;
+.nav-list{
 	width: 160px;
 	@include fade-in-hover(0.4, 0.1s);
 
-	li{
-		@extend .btn;
-		@include rounded-corner-list-item(5px);
+	.container &{
+		margin: 40px;
+	}
 
-		display: block;
-		border-width: 1px;
-		margin-bottom: -1px;
-		font-size: ms(0.5);
-		text-align: left;
+	li{
+		@include rounded-corner-link-list-item(5px);
 	}
 
 	a{
+		@extend .btn;
+		display: block;
+		border-width: 1px;
+		margin-bottom: -1px;
+
+		font-size: ms(0.5);
+		text-align: left;
 		font-weight: normal;
 		color: white;
+
 		&:before{ margin-right: 8px }
 	}
 }
+

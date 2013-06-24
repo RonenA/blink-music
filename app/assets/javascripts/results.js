@@ -70,12 +70,40 @@ var results = (function(){
 
 		$('.track-list').on('click', '.js-delete-track', function(e) {
 			e.preventDefault();
+			var $this = $(this);
+			var track = $this.closest('.track-list > li');
 
-			var track = $(this).closest('.track-list > li');
 			blast.submitVote(false, track.data('track-id')).done(function() {
-				track.remove();
+				track.hide('slow');
 			});
 		});
+
+		// Binds click handler to like and unlike tracks
+
+		var makeLikeHandler = function(selector, vote){
+			$('.track-list').on('click', selector, function(e){
+				e.preventDefault();
+
+				var $this = $(this);
+				var track = $this.closest('.track-list > li');
+
+				var result = (vote ? "Liked!" : "Unliked!");
+				var newAction = (vote ? "Unlike" : "Like");
+
+				blast.submitVote(vote, track.data('track-id')).done(function() {
+					$this.toggleClass('is-liked', vote);
+
+					$this.attr('title', result).tooltip('destroy').tooltip('show');
+
+					$this.on('mouseleave', function(){
+						$(this).attr('title', newAction+" track").tooltip('destroy').tooltip();
+					});
+				});
+			});
+		};
+
+		makeLikeHandler('.js-like-track:not(.is-liked)', true);
+		makeLikeHandler('.js-like-track.is-liked', false);
 
 		// Infinite scrolling
 

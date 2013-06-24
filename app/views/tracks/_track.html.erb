@@ -10,17 +10,28 @@
 			<li>
 				<%= link_icon :url => track.view_url,
 											:icon => 'itunes',
-											:class => "track__link js-tooltip",
+											:class => "js-tooltip track__link",
 											:target => :blank,
 											:title => "Buy on iTunes",
 											"data-placement" => "left" %>
 			</li>
+			<% if @user == current_user %>
+				<li>
+					<a href="#"
+						 class="js-delete-track js-tooltip track__delete"
+						 title="Remove track"
+						 data-placement="left">&times;</a>
+				</li>
+			<% else %>
 			<li>
-				<a href="#"
-				   class="js-delete-track js-tooltip track__delete"
-				   title="Remove track"
-				   data-placement="left">&times;</a>
+				<% current_user_likes_track = @current_user_likes.include?(track) %>
+				<%= link_icon :icon => 'heart',
+											:class => "js-like-track js-tooltip track__like
+																#{'is-liked' if current_user_likes_track }",
+											:title => "#{ current_user_likes_track ? 'Unlike track' : 'Like track'}",
+											"data-placement" => "left" %>
 			</li>
+			<% end %>
 		</ul>
 	</div>
 
