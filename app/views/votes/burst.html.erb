@@ -18,7 +18,7 @@
 						else. It's kind of the main game. %>
 	<div id="page-get-ready" style="display:none">
 		<h1 class="js-ready-heading ready-heading animated">Ready?</h1>
-		<%= link_to "Skip to likes", results_url(current_user.share_token),
+		<%= link_to "Skip to likes", results_path(current_user.share_token),
 									:class => "js-skip-button skip-button icon-heart "+
 									(current_user.has_liked_tracks? ? "" : "hidden"),
 									:onClick => "_gaq.push(['_trackEvent',
