@@ -20,7 +20,11 @@
 		<h1 class="js-ready-heading ready-heading animated">Ready?</h1>
 		<%= link_to "Skip to likes", results_url(current_user.share_token),
 									:class => "js-skip-button skip-button icon-heart "+
-									(current_user.has_liked_tracks? ? "" : "hidden") %>
+									(current_user.has_liked_tracks? ? "" : "hidden"),
+									:onClick => "_gaq.push(['_trackEvent',
+															'My Likes',
+															'Skip to likes from blast',
+															'#{current_user.share_token}']);" %>
 	</div>
 
 	<div class="instructions l-bottom">

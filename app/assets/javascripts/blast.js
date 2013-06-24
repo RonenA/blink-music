@@ -1,7 +1,7 @@
 "use strict";
 //TODO: Remove
 
-var snippetLength = 2000;
+var snippetLength = 2500;
 
 var blast = (function(){
 
@@ -10,51 +10,57 @@ var blast = (function(){
 
 		if(getParameterByName('play_again') != 'true') {
 			$('.js-start-button').click(function(){
-				$('#page-home').fadeOut(function(){
-					$('#page-get-ready').show();
-
-					var heading = $('.js-ready-heading');
-
-					heading.cssAnimate('flashInOut', 1000, function(){
-
-						window.setTimeout(function(){
-							heading.text( "Set" ).cssAnimate('flashInOut', 1000, function(){
-
-								window.setTimeout(function(){
-									heading.text( "Go" ).cssAnimate('flashInOut', 1000, function(){
-											heading.text('');
-									});
-									$('.instructions').addClass('is-mini');
-									startBlast(sounds);
-								});
-
-							});
-						});
-
-					});
-
+				$('#page-home').fadeOut(function() {
+					prepareBlast(sounds);
 				});
-
 			});
 		} else {
 			$('#page-home').hide();
-			$('.instructions').addClass('is-mini');
+
+			prepareBlast(sounds);
+		}
+	};
+
+	var prepareBlast = function(sounds){
+		$('#page-get-ready').show();
+
+		var heading = $('.js-ready-heading');
+
+		heading.cssAnimate('flashInOut', 1000, function(){
 
 			window.setTimeout(function(){
-				startBlast(sounds);
-			}, snippetLength);
-		}
+				heading.text( "Set" ).cssAnimate('flashInOut', 1000, function(){
+
+					window.setTimeout(function(){
+						heading.text( "Go" ).cssAnimate('flashInOut', 1000, function(){
+								heading.text('');
+						});
+						$('.instructions').addClass('is-mini');
+						startBlast(sounds);
+					});
+
+				});
+			});
+
+		});
+
 	};
 
 	var startBlast = function(sounds){
 		var liked;
-		var hasLiked = !$('.js-skip-button').hasClass('hidden');
+		var hasEverLiked = !$('.js-skip-button').hasClass('hidden');
+		var hasVotedThisRound = false;
 
 		var loop;
 		var i = 0;
 		loop = function(){
 			if(i == sounds.length) {
 				window.location = window.location.origin+'/'+shareToken;
+			}
+
+			//Draw attention to the instructions if they aren't using them
+			if( i != 0 && i % 5 == 0 && !hasVotedThisRound ){
+				$('.instructions').cssAnimate('tada');
 			}
 
 			var sound = sounds[i];
@@ -71,10 +77,11 @@ var blast = (function(){
 
 				liked = defer(false, snippetLength);
 				liked.done(function(liked){
-					if(liked && !hasLiked){
+					if(liked && !hasEverLiked){
 						$('.js-skip-button').addClass('animated fadeInDown').removeClass('hidden');
-						hasLiked = true;
+						hasEverLiked = true;
 					}
+
 					stopSound(sound);
 					submitVote(liked, trackInfo.id);
 
@@ -86,11 +93,13 @@ var blast = (function(){
 
 		$(document).keypress(function(e){
 			if (e.which == 97){
+				hasVotedThisRound = true;
 				animateKeyPress($('.js-like-key'));
 				animateFeedbackIcon('<i class="icon-heart"></i>');
 				liked.resolve(true);
 			}
 			else if(e.which == 108){
+				hasVotedThisRound = true;
 				animateKeyPress($('.js-dislike-key'));
 				animateFeedbackIcon('<i class="icon-cancel-circled"></i>');
 				liked.resolve(false);
@@ -112,7 +121,7 @@ var blast = (function(){
 			sounds[i].resolve($('<audio>',
 					{src: tracksInfo[i].preview_url, preload: 'auto'}));
 			++i;
-		}, snippetLength/2);
+		}, snippetLength/4);
 
 		return _.clone(sounds);
 	};
@@ -196,7 +205,7 @@ var blast = (function(){
 		el.addClass("animated").addClass(animation);
 		setTimeout(function(){
 			el.removeClass(animation);
-			callback();
+			if (callback !== undefined) { callback(); }
 		}, duration);
 	};
 

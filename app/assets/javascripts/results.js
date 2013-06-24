@@ -55,6 +55,11 @@ var results = (function(){
 		});
 
 		var playPreview = function(tag) {
+			_gaq.push(['_trackEvent',
+								 'Track',
+								 'Play',
+								 tag.closest('.track-list > li').data('track-id')]);
+
 			tag.find('.icon-play-circled')
 			   .toggleClass('icon-play-circled icon-pause-circled');
 			tag.find('audio')[0].play();
@@ -73,8 +78,15 @@ var results = (function(){
 			var $this = $(this);
 			var track = $this.closest('.track-list > li');
 
+			_gaq.push(['_trackEvent',
+								 'Track',
+								 'Delete from Likes',
+								 track.data('track-id')]);
+
 			blast.submitVote(false, track.data('track-id')).done(function() {
-				track.hide('slow');
+				track.hide('slow', function(){
+					track.remove();
+				});
 			});
 		});
 
@@ -87,13 +99,18 @@ var results = (function(){
 				var $this = $(this);
 				var track = $this.closest('.track-list > li');
 
-				var result = (vote ? "Liked!" : "Unliked!");
+				var result = (vote ? "Like" : "Unlike");
 				var newAction = (vote ? "Unlike" : "Like");
+
+				_gaq.push(['_trackEvent',
+									 'Track',
+									 result,
+									 track.data('track-id')]);
 
 				blast.submitVote(vote, track.data('track-id')).done(function() {
 					$this.toggleClass('is-liked', vote);
 
-					$this.attr('title', result).tooltip('destroy').tooltip('show');
+					$this.attr('title', result+"d!").tooltip('destroy').tooltip('show');
 
 					$this.on('mouseleave', function(){
 						$(this).attr('title', newAction+" track").tooltip('destroy').tooltip();

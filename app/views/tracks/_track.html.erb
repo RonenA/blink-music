@@ -12,6 +12,10 @@
 											:icon => 'itunes',
 											:class => "js-tooltip track__link",
 											:target => :blank,
+											:onClick => "_gaq.push(['_trackEvent',
+																							'Track',
+																							'View on iTunes',
+																							'#{track.id}']);",
 											:title => "Buy on iTunes",
 											"data-placement" => "left" %>
 			</li>
@@ -43,7 +47,11 @@
 			<%= link_to track.artist_name,
 									track.artist_view_url,
 									:class => "track__artist",
-									:target => :blank %>
+									:target => :blank,
+									:onClick => "_gaq.push(['_trackEvent',
+																							'Track',
+																							'View Artist',
+																							'#{track.id}']);" %>
 		</div>
 		<span class="track__album"><%= track.album_name %></span>
 	</div>

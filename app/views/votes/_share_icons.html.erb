@@ -2,14 +2,26 @@
 	<%= link_icon :icon => 'twitter',
 								:class => 'twitter-popup',
 								:url => twitter_share_url(:url => current_page_url,
-																					:text => "Check out these songs I found on Trackblast") %>
+																					:text => "Check out these songs I found on Trackblast"),
+								:onClick => "_gaq.push(['_trackEvent',
+																				'Share',
+																				'Twitter',
+																				'#{@user.share_token}']);" %>
 
 	<%= link_icon :icon => 'facebook-squared',
-								:class => 'facebook-popup' %>
+								:class => 'facebook-popup',
+								:onClick => "_gaq.push(['_trackEvent',
+																				'Share',
+																				'Facebook',
+																				'#{@user.share_token}']);" %>
 
 	<%= link_icon :icon => 'email',
 								:url => " ",
 							  :link_type => :mail_to_block,
 							  :subject => "Trackblast",
-							  :body => current_page_url %>
+							  :body => current_page_url,
+							  :onClick => "_gaq.push(['_trackEvent',
+																				'Share',
+																				'Email',
+																				'#{@user.share_token}']);" %>
 </div>
