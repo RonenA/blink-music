@@ -39,7 +39,7 @@ gem 'kaminari'
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
@@ -51,7 +51,8 @@ gem 'better_errors'
 gem 'binding_of_caller', '>= 0.7'
 
 #For fontello
-gem 'font_assets'
+#This breaks middleware.
+#gem 'font_assets'
 
 #For modular scale font sizing
 gem 'modular-scale'
