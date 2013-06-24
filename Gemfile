@@ -61,6 +61,3 @@ gem 'thin'
 
 #For building urls
 gem 'addressable'
-
-#Google analytics
-gem 'google-analytics-rails'

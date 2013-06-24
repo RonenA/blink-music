@@ -7,17 +7,7 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-  <% if Rails.env.production? %>
-    <%= analytics_init %>
-  <% else #dummy _gaq for development%>
-    <script>
-      var _gaq = {
-        push: function(arr){
-          console.log(arr.join(', '));
-        }
-      }
-    </script>
-  <% end %>
+  <%= render "layouts/analytics" %>
 
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
   <%= yield :head %>
