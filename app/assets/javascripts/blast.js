@@ -8,7 +8,7 @@ var blast = (function(){
 	var go = function() {
 		var sounds = getSounds(tracksInfo);
 
-		if(getParameterByName('play_again') != 'true') {
+		if(getParameterByName('skip_intro') != 'true') {
 			$('.js-start-button').click(function(){
 				$('#page-home').fadeOut(function() {
 					prepareBlast(sounds);
@@ -47,7 +47,7 @@ var blast = (function(){
 	};
 
 	var startBlast = function(sounds){
-		var liked;
+		var like;
 		var hasEverLiked = !$('.js-skip-button').hasClass('hidden');
 		var hasVotedThisRound = false;
 
@@ -75,11 +75,17 @@ var blast = (function(){
 				playSound(sound);
 				startLoadingBar();
 
-				liked = defer(false, snippetLength);
-				liked.done(function(liked){
+				like = defer({liked: false, source: 'time out'}, snippetLength);
+				like.done(function(like){
+					var liked = like.liked;
+
 					if(liked && !hasEverLiked){
 						$('.js-skip-button').addClass('animated fadeInDown').removeClass('hidden');
 						hasEverLiked = true;
+					}
+
+					if (like.source === "key"){
+						showVoteFeedback(sound, liked);
 					}
 
 					stopSound(sound);
@@ -95,16 +101,28 @@ var blast = (function(){
 			if (e.which == 97){
 				hasVotedThisRound = true;
 				animateKeyPress($('.js-like-key'));
-				animateFeedbackIcon('<i class="icon-heart"></i>');
-				liked.resolve(true);
+				like.resolve({liked: true, source: 'key'});
 			}
 			else if(e.which == 108){
 				hasVotedThisRound = true;
 				animateKeyPress($('.js-dislike-key'));
-				animateFeedbackIcon('<i class="icon-cancel-circled"></i>');
-				liked.resolve(false);
+				like.resolve({liked: false, source: 'key'});
 			}
 		});
+	};
+
+	var showVoteFeedback = function(sound, liked){
+		var icon = (liked ? "heart" : "cancel-circled");
+		var feedback = $('.feedback');
+
+		feedback.addClass('is-in');
+		feedback.removeClass('fadeOutDown').addClass('bounceIn');
+		$('.feedback__icon').removeClass('icon-heart icon-cancel-circled').addClass('icon-'+icon);
+		$('.feedback__time').text(sound[0].currentTime.toFixed(2) + "s");
+
+		window.setTimeout(function(){
+			feedback.removeClass('bounceIn').addClass('fadeOutDown');
+		}, 800);
 	};
 
 	//  getSounds :: [Map] -> [Deferred $(<audio>)]
@@ -167,15 +185,6 @@ var blast = (function(){
 	var animateKeyPress = function(key){
 		key.addClass('pressed');
 		window.setTimeout(function(){ key.removeClass('pressed'); }, 200);
-	}
-
-	var animateFeedbackIcon = function(contents){
-		var icon = $('.feedback-icon');
-
-		icon.html(contents).removeClass('fadeOutDown').addClass('bounceIn');
-		window.setTimeout(function(){
-			icon.removeClass('bounceIn').addClass('fadeOutDown');
-		}, 800);
 	}
 
 	// Produces the value that was input, but only after a delay.

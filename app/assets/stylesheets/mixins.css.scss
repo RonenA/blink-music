@@ -23,6 +23,7 @@
 
 //For vertically and horizontally centering
 @mixin center-absolute($width, $height){
+  position: absolute;
   top: 50%;
   left: 50%;
   margin-top: -$height/2;

@@ -31,7 +31,7 @@ module ApplicationHelper
 	end
 
 	def tagline
-		"Discover new music by voting on two-second snippets."
+		"Discover new music by voting on split-second snippets."
 	end
 
 end

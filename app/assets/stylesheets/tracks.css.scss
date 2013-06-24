@@ -25,7 +25,6 @@ $track-image-size: 100px;
 .track__play-icon{
 	$play_i_size: 32px;
 
-	position: absolute;
 	font-size: $play_i_size;
 	@include center-absolute(($play_i_size+2), ($play_i_size+2));
 

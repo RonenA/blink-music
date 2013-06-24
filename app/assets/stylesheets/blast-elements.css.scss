@@ -2,16 +2,26 @@
 	opacity: 0;
 }
 
-$feedback-icon-size: 140px;
-.feedback-icon{
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -$feedback-icon-size/2;
-	margin-left: -$feedback-icon-size/2;
 
-	font-size: 100px;
+$feedback-icon-size: 140px;
+.feedback{
+	@include center-absolute($feedback-icon-size, $feedback-icon-size);
 	@include animation-duration(0.3s);
+
+	opacity: 0;
+	&.is-in{ opacity: 1}
+}
+
+.feedback__icon{
+	font-size: 100px;
+}
+
+.feedback__time{
+	display: block;
+	font-size: ms(1);
+	text-align: center;
+	margin-top: 5px;
+	font-weight: 100;
 }
 
 .skip-button{
