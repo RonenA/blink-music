@@ -1,5 +1,5 @@
 <div class="sidebar">
-	<%= link_to root_url do %>
+	<%= link_to root_path do %>
 		<h1>Trackburst</h1>
 	<% end %>
 
@@ -10,7 +10,7 @@
 		<% end %>
 
 		<h2 class="icon-heart red-icon">My likes</h2>
-		<%= link_to root_url(:skip_intro => true),
+		<%= link_to root_path(:skip_intro => true),
 								:class => "btn btn--blue",
 								:onClick => "_gaq.push(['_trackEvent',
 																				'Play',
@@ -27,7 +27,7 @@
 	<% else %>
 
 		<h2><%= tagline %></h2>
-		<%= link_to root_url(:skip_intro => true),
+		<%= link_to root_path(:skip_intro => true),
 								:class => "btn btn--blue",
 								:onClick => "_gaq.push(['_trackEvent',
 																				'Play',
