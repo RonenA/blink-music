@@ -83,7 +83,7 @@ var results = (function(){
 								 'Delete from Likes',
 								 track.data('track-id')]);
 
-			blast.submitVote(false, track.data('track-id')).done(function() {
+			burst.submitVote(false, track.data('track-id')).done(function() {
 				track.hide('slow', function(){
 					track.remove();
 				});
@@ -107,7 +107,7 @@ var results = (function(){
 									 result,
 									 track.data('track-id')]);
 
-				blast.submitVote(vote, track.data('track-id')).done(function() {
+				burst.submitVote(vote, track.data('track-id')).done(function() {
 					$this.toggleClass('is-liked', vote);
 
 					$this.attr('title', result+"d!").tooltip('destroy').tooltip('show');

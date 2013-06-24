@@ -6,7 +6,7 @@
 <% end %>
 
 <% content_for :js_page do %>
-	blast
+	burst
 <% end %>
 
 <div class="loading-bar-bg"></div>
@@ -23,7 +23,7 @@
 									(current_user.has_liked_tracks? ? "" : "hidden"),
 									:onClick => "_gaq.push(['_trackEvent',
 															'My Likes',
-															'Skip to likes from blast',
+															'Skip to likes from burst',
 															'#{current_user.share_token}']);" %>
 	</div>
 

@@ -1,7 +1,7 @@
 class VotesController < ApplicationController
 	before_filter :ensure_token
 
-	def blast
+	def burst
     @tracks = current_user.tracks_to_vote
 	end
 

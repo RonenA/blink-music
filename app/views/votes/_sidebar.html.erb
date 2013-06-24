@@ -1,12 +1,12 @@
 <div class="sidebar">
 	<%= link_to root_url do %>
-		<h1>Trackblast</h1>
+		<h1>Trackburst</h1>
 	<% end %>
 
 	<% if @user == current_user %>
 
 		<% content_for :title do %>
-			 My Likes | Trackblast
+			 My Likes | Trackburst
 		<% end %>
 
 		<h2 class="icon-heart red-icon">My likes</h2>
@@ -20,7 +20,7 @@
 		<% end %>
 
 		<div class="l-bottom sidebar__share">
-			Share your blast
+			Share your burst
 			<%= render :partial => "share_icons" %>
 		</div>
 

@@ -1,5 +1,5 @@
 BlinkMusic::Application.routes.draw do
- 	root :to => 'votes#blast'
+ 	root :to => 'votes#burst'
  	get '/votes/candidates' => 'votes#candidates'
  	put '/votes/:track_id' => 'votes#submit'
 

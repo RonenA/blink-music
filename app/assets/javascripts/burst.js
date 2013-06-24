@@ -3,7 +3,7 @@
 
 var snippetLength = 2500;
 
-var blast = (function(){
+var burst = (function(){
 
 	var go = function() {
 		var sounds = getSounds(tracksInfo);
@@ -11,17 +11,17 @@ var blast = (function(){
 		if(getParameterByName('skip_intro') != 'true') {
 			$('.js-start-button').click(function(){
 				$('#page-home').fadeOut(function() {
-					prepareBlast(sounds);
+					prepareBurst(sounds);
 				});
 			});
 		} else {
 			$('#page-home').hide();
 
-			prepareBlast(sounds);
+			prepareBurst(sounds);
 		}
 	};
 
-	var prepareBlast = function(sounds){
+	var prepareBurst = function(sounds){
 		$('#page-get-ready').show();
 
 		var heading = $('.js-ready-heading');
@@ -36,7 +36,7 @@ var blast = (function(){
 								heading.text('');
 						});
 						$('.instructions').addClass('is-mini');
-						startBlast(sounds);
+						startBurst(sounds);
 					});
 
 				});
@@ -46,7 +46,7 @@ var blast = (function(){
 
 	};
 
-	var startBlast = function(sounds){
+	var startBurst = function(sounds){
 		var like;
 		var hasEverLiked = !$('.js-skip-button').hasClass('hidden');
 		var hasVotedThisRound = false;
