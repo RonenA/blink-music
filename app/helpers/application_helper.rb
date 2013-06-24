@@ -21,7 +21,7 @@ module ApplicationHelper
 	end
 
 	def current_page_url
-		"#{request.protocol}#{request.host_with_port}#{request.fullpath}"
+		"#{request.protocol}www.trackburst.com#{request.fullpath}"
 	end
 
 	def twitter_share_url(opts)
