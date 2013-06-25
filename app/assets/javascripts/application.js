@@ -15,6 +15,5 @@
 //= require underscore
 //= require modernizr
 //= require bootstrap-tooltip
-//= require feature-detection
 //= require_tree
 

@@ -1,27 +1,19 @@
-<div class="share__icons">
+<div class="share__icons ga-share-links">
 	<%= link_icon :icon => 'twitter',
 								:class => 'twitter-popup',
-								:url => twitter_share_url(:url => current_page_url,
-																					:text => "Check out these songs I found on Trackburst"),
-								:onClick => "_gaq.push(['_trackEvent',
-																				'Share',
-																				'Twitter',
-																				'#{@user.share_token}']);" %>
+								:url => twitter_share_url(
+									:url => current_page_url,
+									:text => "Check out these songs I found on Trackburst"),
+								"data-share-type" => "Twitter" %>
 
 	<%= link_icon :icon => 'facebook-squared',
 								:class => 'facebook-popup',
-								:onClick => "_gaq.push(['_trackEvent',
-																				'Share',
-																				'Facebook',
-																				'#{@user.share_token}']);" %>
+								"data-share-type" => "Facebook" %>
 
 	<%= link_icon :icon => 'email',
 								:url => " ",
 							  :link_type => :mail_to_block,
 							  :subject => "Trackburst",
 							  :body => current_page_url,
-							  :onClick => "_gaq.push(['_trackEvent',
-																				'Share',
-																				'Email',
-																				'#{@user.share_token}']);" %>
+							  "data-share-type" => "Email" %>
 </div>

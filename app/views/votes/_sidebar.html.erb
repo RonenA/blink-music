@@ -11,11 +11,7 @@
 
 		<h2 class="icon-heart red-icon">My likes</h2>
 		<%= link_to root_path(:skip_intro => true),
-								:class => "btn btn--blue",
-								:onClick => "_gaq.push(['_trackEvent',
-																				'Play',
-																				'From My Likes',
-																				'#{@user.share_token}']);" do %>
+								:class => "btn btn--blue ga-play-my-likes" do %>
 			Play again  <i class="icon-play"></i>
 		<% end %>
 
@@ -28,11 +24,8 @@
 
 		<h2><%= tagline %></h2>
 		<%= link_to root_path(:skip_intro => true),
-								:class => "btn btn--blue",
-								:onClick => "_gaq.push(['_trackEvent',
-																				'Play',
-																				'From Their Likes',
-																				'#{@user.share_token}']);" do %>
+								:class => "btn btn--blue ga-play-their-likes",
+								"data-referrer" => @user.share_token do %>
 			Play Now  <i class="icon-play"></i>
 		<% end %>
 

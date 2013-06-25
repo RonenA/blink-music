@@ -55,10 +55,9 @@ var results = (function(){
 		});
 
 		var playPreview = function(tag) {
-			_gaq.push(['_trackEvent',
-								 'Track',
-								 'Play',
-								 tag.closest('.track-list > li').data('track-id')]);
+
+			var trackId = tag.closest('.track-list > li').data('track-id');
+			ga('send','event', 'Track', 'Play', trackId);
 
 			tag.find('.icon-play-circled')
 			   .toggleClass('icon-play-circled icon-pause-circled');
@@ -78,10 +77,7 @@ var results = (function(){
 			var $this = $(this);
 			var track = $this.closest('.track-list > li');
 
-			_gaq.push(['_trackEvent',
-								 'Track',
-								 'Delete from Likes',
-								 track.data('track-id')]);
+			ga('send', 'event', 'Track', 'Delete from Likes', track.data('track-id'));
 
 			burst.submitVote(false, track.data('track-id')).done(function() {
 				track.hide('slow', function(){
@@ -102,10 +98,9 @@ var results = (function(){
 				var result = (vote ? "Like" : "Unlike");
 				var newAction = (vote ? "Unlike" : "Like");
 
-				_gaq.push(['_trackEvent',
-									 'Track',
-									 result,
-									 track.data('track-id')]);
+				ga('send',
+				 	 'event',
+				 	 'Track', result, track.data('track-id'));
 
 				burst.submitVote(vote, track.data('track-id')).done(function() {
 					$this.toggleClass('is-liked', vote);

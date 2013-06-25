@@ -1,0 +1,8 @@
+.error {
+	padding: 21px 60px;
+	background-color: #F00000;
+	font-weight: bold;
+	text-transform: uppercase;
+
+	&:empty { display: none }
+}

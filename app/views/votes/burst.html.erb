@@ -1,13 +1,14 @@
 <% content_for :head do %>
 	<script>
 		var tracksInfo = <%=j @tracks.to_json.html_safe %>;
-		var shareToken = <%=j current_user.share_token.to_json.html_safe %>;
 	</script>
 <% end %>
 
 <% content_for :js_page do %>
 	burst
 <% end %>
+
+<div class="error l-top-full-width"></div>
 
 <div class="loading-bar-bg"></div>
 
@@ -19,12 +20,8 @@
 	<div id="page-get-ready" style="display:none">
 		<h1 class="js-ready-heading ready-heading animated">Ready?</h1>
 		<%= link_to "Skip to likes", results_path(current_user.share_token),
-									:class => "js-skip-button skip-button icon-heart "+
-									(current_user.has_liked_tracks? ? "" : "hidden"),
-									:onClick => "_gaq.push(['_trackEvent',
-															'My Likes',
-															'Skip to likes from burst',
-															'#{current_user.share_token}']);" %>
+									:class => "js-skip-button ga-skip-button skip-button icon-heart "+
+									(current_user.has_liked_tracks? ? "" : "hidden") %>
 	</div>
 
 	<div class="instructions l-bottom">

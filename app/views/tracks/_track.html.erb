@@ -10,12 +10,8 @@
 			<li>
 				<%= link_icon :url => track.view_url,
 											:icon => 'itunes',
-											:class => "js-tooltip track__link",
+											:class => "js-tooltip track__link ga-track-link",
 											:target => :blank,
-											:onClick => "_gaq.push(['_trackEvent',
-																							'Track',
-																							'View on iTunes',
-																							'#{track.id}']);",
 											:title => "Buy on iTunes",
 											"data-placement" => "left" %>
 			</li>
@@ -46,12 +42,8 @@
 			 line without the link itself being a block%>
 			<%= link_to track.artist_name,
 									track.artist_view_url,
-									:class => "track__artist",
-									:target => :blank,
-									:onClick => "_gaq.push(['_trackEvent',
-																							'Track',
-																							'View Artist',
-																							'#{track.id}']);" %>
+									:class => "track__artist ga-track-artist",
+									:target => :blank %>
 		</div>
 		<span class="track__album"><%= track.album_name %></span>
 	</div>

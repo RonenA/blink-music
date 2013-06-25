@@ -1,15 +1,11 @@
 <%# Variable rendered_from is used for google analyics event tracking%>
 
-<ul class="nav-list">
+<ul class="nav-list" data-rendered-from="<%= rendered_from %>">
 	<% if current_user.has_liked_tracks? %>
 		<li>
 			<%= link_to "My Likes",
 					results_path(current_user.share_token),
-					:class => "icon-heart",
-					:onClick => "_gaq.push(['_trackEvent',
-											'My Likes',
-											'From #{rendered_from}',
-											'#{current_user.share_token}']);" %>
+					:class => "icon-heart ga-my-likes" %>
 		</li>
 	<% end %>
 	<li><%= mail_to "hello@trackburst.com", "Contact Us", :class => "icon-email" %></li>

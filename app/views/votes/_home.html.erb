@@ -7,11 +7,7 @@
 				:locals => { :rendered_from => "home"} %>
 	</nav>
 
-	<button class="btn--large btn--blue js-start-button"
-					onClick="_gaq.push(['_trackEvent',
-															'Play',
-															'From Home',
-															'<%= current_user.share_token %>']);">
+	<button class="btn--large btn--blue js-start-button ga-play-home">
 		Let's Play <i class="icon-play"></i>
 	</button>
 </div>

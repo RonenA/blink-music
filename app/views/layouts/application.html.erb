@@ -9,6 +9,8 @@
   <%= csrf_meta_tags %>
   <%= render "layouts/analytics" %>
 
+  <script> var shareToken = <%=j current_user.share_token.to_json.html_safe %>; </script>
+
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
   <%= yield :head %>
 </head>

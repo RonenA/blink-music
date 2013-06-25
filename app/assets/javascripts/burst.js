@@ -56,6 +56,8 @@ var burst = (function(){
 		var loop = function(){
 			var i = soundIndex;
 
+			console.log('A '+i);
+
 			if(i == sounds.length) {
 				window.location = window.location.origin+'/'+shareToken;
 			}
@@ -72,6 +74,7 @@ var burst = (function(){
 				if(!isReady(sound)) {
 					setTimeout(function() {
 						if(!isReady(sound)) {
+							console.log('B '+i);
 							++soundIndex; loop();
 						} else {
 							continueLoop(sound, trackInfo);
@@ -98,6 +101,8 @@ var burst = (function(){
 				if (like.source === "key"){
 					showVoteFeedback(sound, liked);
 				}
+
+				ga('send', 'event', 'Vote', liked+' by '+like.source, trackInfo.id);
 
 				stopSound(sound);
 				submitVote(liked, trackInfo.id);
@@ -142,6 +147,7 @@ var burst = (function(){
 		});
 		var i = 0;
 		var timer = setInterval(function() {
+			console.log('C '+i);
 			if(i == tracksInfo.length) {
 				clearInterval(timer);
 			} else if(i < soundIndex + 10) {
