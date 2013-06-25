@@ -46,14 +46,16 @@ var burst = (function(){
 
 	};
 
+	var soundIndex = 0;
+
 	var startBurst = function(sounds){
 		var like;
 		var hasEverLiked = !$('.js-skip-button').hasClass('hidden');
 		var hasVotedThisRound = false;
 
-		var loop;
-		var i = 0;
-		loop = function(){
+		var loop = function(){
+			var i = soundIndex;
+
 			if(i == sounds.length) {
 				window.location = window.location.origin+'/'+shareToken;
 			}
@@ -68,31 +70,39 @@ var burst = (function(){
 
 			sound.done(function(sound) {
 				if(!isReady(sound)) {
-					++i; loop();
-					return;
+					setTimeout(function() {
+						if(!isReady(sound)) {
+							++soundIndex; loop();
+						} else {
+							continueLoop(sound, trackInfo);
+						}
+					}, 100);
+				} else {
+					continueLoop(sound, trackInfo);
+				}
+			});
+		};
+		var continueLoop = function(sound, trackInfo) {
+			playSound(sound);
+			startLoadingBar();
+
+			like = defer({liked: false, source: 'time out'}, snippetLength);
+			like.done(function(like){
+				var liked = like.liked;
+
+				if(liked && !hasEverLiked){
+					$('.js-skip-button').addClass('animated fadeInDown').removeClass('hidden');
+					hasEverLiked = true;
 				}
 
-				playSound(sound);
-				startLoadingBar();
+				if (like.source === "key"){
+					showVoteFeedback(sound, liked);
+				}
 
-				like = defer({liked: false, source: 'time out'}, snippetLength);
-				like.done(function(like){
-					var liked = like.liked;
+				stopSound(sound);
+				submitVote(liked, trackInfo.id);
 
-					if(liked && !hasEverLiked){
-						$('.js-skip-button').addClass('animated fadeInDown').removeClass('hidden');
-						hasEverLiked = true;
-					}
-
-					if (like.source === "key"){
-						showVoteFeedback(sound, liked);
-					}
-
-					stopSound(sound);
-					submitVote(liked, trackInfo.id);
-
-					++i; loop();
-				});
+				++soundIndex; loop();
 			});
 		};
 		loop();
@@ -134,14 +144,14 @@ var burst = (function(){
 		var timer = setInterval(function() {
 			if(i == tracksInfo.length) {
 				clearInterval(timer);
-				return;
+			} else if(i < soundIndex + 10) {
+				sounds[i].resolve($('<audio>',
+						{src: tracksInfo[i].preview_url, preload: 'auto'}));
+				++i;
 			}
-			sounds[i].resolve($('<audio>',
-					{src: tracksInfo[i].preview_url, preload: 'auto'}));
-			++i;
-		}, snippetLength/4);
+		}, 200);
 
-		return _.clone(sounds);
+		return sounds;
 	};
 
 	// Ajax put vote
@@ -185,7 +195,7 @@ var burst = (function(){
 	var animateKeyPress = function(key){
 		key.addClass('pressed');
 		window.setTimeout(function(){ key.removeClass('pressed'); }, 200);
-	}
+	};
 
 	// Produces the value that was input, but only after a delay.
 	//  defer :: a -> Integer -> Deferred a

@@ -18,8 +18,3 @@
 //= require feature-detection
 //= require_tree
 
-
-$(function() {
-	var jsPage = $('body').data('js-page');
-	window[jsPage].go();
-});
