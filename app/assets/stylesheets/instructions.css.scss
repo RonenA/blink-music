@@ -1,4 +1,8 @@
 .instructions{
+	z-index: -1; //to prevent it from going above other elements
+							 //when making the window small.
+	margin-left: 3px; //visual align, box shadow of keys sticks out
+
 	font-size: ms(1);
 	@include transition(font-size 0.5s);
 
@@ -11,12 +15,6 @@
 	}
 }
 
-@media screen and (max-height:552px) {
-	.instructions.l-bottom {
-		position: static;
-		margin-top: 20px;
-	}
-}
 
 .key{
 	width: 60px;
