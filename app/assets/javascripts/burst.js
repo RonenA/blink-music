@@ -52,11 +52,11 @@ var burst = (function(){
 		var like;
 		var hasEverLiked = !$('.js-skip-button').hasClass('hidden');
 		var hasVotedThisRound = false;
+		var skippedTracks = 0;
+		var skipTracks = true;
 
 		var loop = function(){
 			var i = soundIndex;
-
-			console.log('A '+i);
 
 			if(i == sounds.length) {
 				window.location = window.location.origin+'/'+shareToken;
@@ -67,14 +67,20 @@ var burst = (function(){
 				$('.instructions').cssAnimate('tada');
 			}
 
+			// If we're skipping too many tracks, their connection is just bad.
+			if(skippedTracks >= 10) {
+				skipTracks = false;
+				$('.error').text("We're having trouble downloading the tracks. This might be an issue with your internet connection.");
+			}
+
 			var sound = sounds[i];
 			var trackInfo = tracksInfo[i];
 
 			sound.done(function(sound) {
-				if(!isReady(sound)) {
+				if(!isReady(sound) && skipTracks) {
 					setTimeout(function() {
 						if(!isReady(sound)) {
-							console.log('B '+i);
+							++skippedTracks;
 							++soundIndex; loop();
 						} else {
 							continueLoop(sound, trackInfo);
@@ -147,7 +153,6 @@ var burst = (function(){
 		});
 		var i = 0;
 		var timer = setInterval(function() {
-			console.log('C '+i);
 			if(i == tracksInfo.length) {
 				clearInterval(timer);
 			} else if(i < soundIndex + 10) {
