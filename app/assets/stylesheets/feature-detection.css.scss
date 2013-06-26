@@ -5,11 +5,11 @@
 	.no-audio-error { display: block }
 }
 
-.touch{
+.mobile{
 	.main 					{ display: none }
-	.no-touch-error { display: block }
+	.no-mobile-error { display: block }
 }
 
-.no-m4a.touch{ //Don't display both errors
+.no-m4a.mobile{ //Don't display both errors
 	.no-audio-error	{ display: none }
 }

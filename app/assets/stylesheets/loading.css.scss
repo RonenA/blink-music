@@ -39,6 +39,6 @@
 
 .load{
   @include animation-name(load);
-  @include animation-duration(2.5s);
+  @include animation-duration(3.2s);
   @include animation-timing-function(linear);
 }

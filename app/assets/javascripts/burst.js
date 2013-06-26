@@ -1,7 +1,7 @@
 "use strict";
 //TODO: Remove
 
-var snippetLength = 2500;
+var snippetLength = 3200;
 
 var burst = (function(){
 
@@ -108,7 +108,8 @@ var burst = (function(){
 					showVoteFeedback(sound, liked);
 				}
 
-				ga('send', 'event', 'Vote', liked+' by '+like.source, trackInfo.id);
+				var msToVote = Math.floor(sound[0].currentTime*1000);
+				ga('send', 'event', 'Vote', liked+' by '+like.source, trackInfo.id, msToVote);
 
 				stopSound(sound);
 				submitVote(liked, trackInfo.id);
