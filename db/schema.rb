@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130623002101) do
+ActiveRecord::Schema.define(:version => 20130815205628) do
 
   create_table "tracks", :force => true do |t|
     t.string   "id_from_vendor"
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(:version => 20130623002101) do
   end
 
   create_table "votes", :force => true do |t|
-    t.string   "user_id",    :null => false
-    t.string   "track_id",   :null => false
+    t.integer  "user_id",    :null => false
+    t.integer  "track_id",   :null => false
     t.boolean  "liked"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
