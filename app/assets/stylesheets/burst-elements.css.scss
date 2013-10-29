@@ -29,7 +29,7 @@ $feedback-icon-size: 140px;
 	@extend .l-bottom-right;
 	@include fade-in-hover(0.5, 0.2s);
 
-	margin: 40px;
+	margin: $home-padding;
 	font-size: ms(0.5);
 	border-width: 1px;
 	font-weight: 100;
