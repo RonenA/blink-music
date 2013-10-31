@@ -14,6 +14,8 @@ $helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $navy: #1B4F81;
 $light-blue: #00ADFF;
 
+$home-padding: 7.5%;
+
 body{
 	background-color: $navy;
 	font-family: 'Open Sans', sans-serif;
@@ -55,7 +57,7 @@ h2{
 }
 
 .container{
-	margin: 60px;
+	margin: $home-padding;
 }
 
 .media__image{
