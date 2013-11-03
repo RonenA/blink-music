@@ -80,6 +80,7 @@ var burst = (function(){
 				if(!isReady(sound) && skipTracks) {
 					setTimeout(function() {
 						if(!isReady(sound)) {
+							submitData({liked: false, flagged: true}, trackInfo.id);
 							++skippedTracks;
 							++soundIndex; loop();
 						} else {
@@ -166,18 +167,24 @@ var burst = (function(){
 		return sounds;
 	};
 
-	// Ajax put vote
-	//  submitVote :: Bool -> Integer -> Deferred ()
-	var submitVote = function(liked, trackId){
+	// Ajax put request
+	//  submitData :: Map -> Integer -> Deferred ()
+	var submitData = function(data, trackId){
 		return $.ajax({
 			url: '/votes/'+trackId,
 			type: 'PUT',
 			dataType: 'json',
-			data: { liked: liked }
+			data: data,
 		}).fail(function (jqXHR, textStatus, errorThrown) {
 			//TODO: Handle errors better
 			//alert("Error: " + textStatus);
 		});
+	};
+
+	// Ajax put for just the vote
+	//  submitVote :: Bool -> Integer -> Deferred ()
+	var submitVote = function(liked, trackId){
+		return submitData({ liked: liked }, trackId);
 	};
 
 	//  isReady :: $(<audio>) -> Bool
